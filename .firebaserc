@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "easygym-7a9c2": {
+      "hosting": {
+        "easy-gym": [
+          "easygym-7a9c2"
+        ]
+      }
+    }
+  }
+}

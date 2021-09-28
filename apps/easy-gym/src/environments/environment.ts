@@ -4,7 +4,38 @@
 
 export const environment = {
   production: false,
+  firebase: { apiKey: "AIzaSyCEzWtpJutwLfZSmZyUJTolEHukOwuACHU",
+    authDomain: "easygym-7a9c2.firebaseapp.com",
+    projectId: "easygym-7a9c2",
+    storageBucket: "easygym-7a9c2.appspot.com",
+    messagingSenderId: "1022533059766",
+    appId: "1:1022533059766:web:3eb08053443ad764cd5217",
+    measurementId: "G-6N2M1880JF"}
 };
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCEzWtpJutwLfZSmZyUJTolEHukOwuACHU",
+  authDomain: "easygym-7a9c2.firebaseapp.com",
+  projectId: "easygym-7a9c2",
+  storageBucket: "easygym-7a9c2.appspot.com",
+  messagingSenderId: "1022533059766",
+  appId: "1:1022533059766:web:3eb08053443ad764cd5217",
+  measurementId: "G-6N2M1880JF"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+// 4/1AX4XfWgwwfsekm8vANIjhjbRToI-8Ag-rWMuZSWYBU9oqUeRYWy3IqbTo-I
 
 /*
  * For easier debugging in development mode, you can import the following file

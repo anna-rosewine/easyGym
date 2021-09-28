@@ -9,7 +9,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/easy-gym",
             "index": "apps/easy-gym/src/index.html",
@@ -21,7 +23,9 @@
               "apps/easy-gym/src/favicon.ico",
               "apps/easy-gym/src/assets"
             ],
-            "styles": ["apps/easy-gym/src/styles.scss"],
+            "styles": [
+              "apps/easy-gym/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -86,11 +90,17 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/easy-gym"],
+          "outputs": [
+            "coverage/apps/easy-gym"
+          ],
           "options": {
             "jestConfig": "apps/easy-gym/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     },
@@ -114,9 +124,13 @@
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["apps/easy-gym-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/easy-gym-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
