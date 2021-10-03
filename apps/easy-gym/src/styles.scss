@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+
+$main-color: #000000;
+$main-dark: rgba($main-color, 0.88);
+$accent-background-color: #000000;
+$accent-text-color: #ffffff;
+
+* {
+  box-sizing: border-box;
+}
+
+.flex {
+  display: flex;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 30px;
+  width: 90%;
+  margin: 0 auto;
+  position: fixed;
+  bottom: 10px;
+}
+
+button {
+  width: 100%;
+  outline: 0;
+  border: 0;
+  background-color: $accent-background-color;
+  color: $accent-text-color;
+  padding: 10px;
+  text-align: center;
+  font-weight: 900;
+}

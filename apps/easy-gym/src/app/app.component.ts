@@ -10,10 +10,9 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 })
 export class AppComponent {
   title = 'easy-gym';
-  todo: Observable<{id: string}[]>;
 
   constructor(private store: AngularFirestore, private db: AngularFireDatabase){
-    this.todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<{id: string}[]>;
+    // this.todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<{id: string}[]>;
   }
 
   //Example of setting database information
