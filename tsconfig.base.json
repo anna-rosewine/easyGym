@@ -14,7 +14,19 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@pet/auth/feature": ["libs/auth/feature/src/index.ts"],
+      "@pet/auth/ui": ["libs/auth/ui/src/index.ts"],
+      "@pet/global": ["libs/global/src/index.ts"],
+      "@pet/process-of-workout/feature": [
+        "libs/process-of-workout/feature/src/index.ts"
+      ],
+      "@pet/process-of-workout/ui": ["libs/process-of-workout/ui/src/index.ts"],
+      "@pet/shared/functions": ["libs/shared/functions/src/index.ts"],
+      "@pet/shared/ui": ["libs/shared/ui/src/index.ts"],
+      "@pet/workouts/feature": ["libs/workouts/feature/src/index.ts"],
+      "@pet/workouts/ui": ["libs/workouts/ui/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

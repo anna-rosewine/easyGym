@@ -1,6 +1,56 @@
 {
   "version": 1,
   "projects": {
+    "auth-feature": {
+      "projectType": "library",
+      "root": "libs/auth/feature",
+      "sourceRoot": "libs/auth/feature/src",
+      "prefix": "pet",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/auth/feature"],
+          "options": {
+            "jestConfig": "libs/auth/feature/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/auth/feature/src/**/*.ts",
+              "libs/auth/feature/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "auth-ui": {
+      "projectType": "library",
+      "root": "libs/auth/ui",
+      "sourceRoot": "libs/auth/ui/src",
+      "prefix": "pet",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/auth/ui"],
+          "options": {
+            "jestConfig": "libs/auth/ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/auth/ui/src/**/*.ts",
+              "libs/auth/ui/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "easy-gym": {
       "projectType": "application",
       "root": "apps/easy-gym",
@@ -9,9 +59,7 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/easy-gym",
             "index": "apps/easy-gym/src/index.html",
@@ -23,9 +71,7 @@
               "apps/easy-gym/src/favicon.ico",
               "apps/easy-gym/src/assets"
             ],
-            "styles": [
-              "apps/easy-gym/src/styles.scss"
-            ],
+            "styles": ["apps/easy-gym/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -90,9 +136,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/easy-gym"
-          ],
+          "outputs": ["coverage/apps/easy-gym"],
           "options": {
             "jestConfig": "apps/easy-gym/jest.config.js",
             "passWithNoTests": true
@@ -124,12 +168,183 @@
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/easy-gym-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "global": {
+      "projectType": "library",
+      "root": "libs/global",
+      "sourceRoot": "libs/global/src",
+      "prefix": "pet",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/global"],
+          "options": {
+            "jestConfig": "libs/global/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "apps/easy-gym-e2e/**/*.{js,ts}"
+              "libs/global/src/**/*.ts",
+              "libs/global/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "process-of-workout-feature": {
+      "projectType": "library",
+      "root": "libs/process-of-workout/feature",
+      "sourceRoot": "libs/process-of-workout/feature/src",
+      "prefix": "pet",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/process-of-workout/feature"],
+          "options": {
+            "jestConfig": "libs/process-of-workout/feature/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/process-of-workout/feature/src/**/*.ts",
+              "libs/process-of-workout/feature/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "process-of-workout-ui": {
+      "projectType": "library",
+      "root": "libs/process-of-workout/ui",
+      "sourceRoot": "libs/process-of-workout/ui/src",
+      "prefix": "pet",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/process-of-workout/ui"],
+          "options": {
+            "jestConfig": "libs/process-of-workout/ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/process-of-workout/ui/src/**/*.ts",
+              "libs/process-of-workout/ui/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "shared-functions": {
+      "projectType": "library",
+      "root": "libs/shared/functions",
+      "sourceRoot": "libs/shared/functions/src",
+      "prefix": "pet",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/functions"],
+          "options": {
+            "jestConfig": "libs/shared/functions/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/functions/src/**/*.ts",
+              "libs/shared/functions/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "shared-ui": {
+      "projectType": "library",
+      "root": "libs/shared/ui",
+      "sourceRoot": "libs/shared/ui/src",
+      "prefix": "pet",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/ui"],
+          "options": {
+            "jestConfig": "libs/shared/ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/ui/src/**/*.ts",
+              "libs/shared/ui/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "workouts-feature": {
+      "projectType": "library",
+      "root": "libs/workouts/feature",
+      "sourceRoot": "libs/workouts/feature/src",
+      "prefix": "pet",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/workouts/feature"],
+          "options": {
+            "jestConfig": "libs/workouts/feature/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/workouts/feature/src/**/*.ts",
+              "libs/workouts/feature/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "workouts-ui": {
+      "projectType": "library",
+      "root": "libs/workouts/ui",
+      "sourceRoot": "libs/workouts/ui/src",
+      "prefix": "pet",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/workouts/ui"],
+          "options": {
+            "jestConfig": "libs/workouts/ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/workouts/ui/src/**/*.ts",
+              "libs/workouts/ui/src/**/*.html"
             ]
           }
         }

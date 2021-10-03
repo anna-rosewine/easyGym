@@ -27,12 +27,39 @@
     ]
   },
   "projects": {
+    "auth-feature": {
+      "tags": []
+    },
+    "auth-ui": {
+      "tags": []
+    },
     "easy-gym": {
       "tags": []
     },
     "easy-gym-e2e": {
       "tags": [],
       "implicitDependencies": ["easy-gym"]
+    },
+    "global": {
+      "tags": []
+    },
+    "process-of-workout-feature": {
+      "tags": []
+    },
+    "process-of-workout-ui": {
+      "tags": []
+    },
+    "shared-functions": {
+      "tags": []
+    },
+    "shared-ui": {
+      "tags": []
+    },
+    "workouts-feature": {
+      "tags": []
+    },
+    "workouts-ui": {
+      "tags": []
     }
   }
 }
