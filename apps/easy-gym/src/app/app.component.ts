@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
+// import { AngularFirestore } from '@angular/fire/compat/firestore';
+// import { AngularFireDatabase } from '@angular/fire/compat/database';
 
 @Component({
   selector: 'pet-root',
@@ -11,7 +10,8 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 export class AppComponent {
   title = 'easy-gym';
 
-  constructor(private store: AngularFirestore, private db: AngularFireDatabase){
+  constructor(){
+    //private store: AngularFirestore, private db: AngularFireDatabase
     // this.todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<{id: string}[]>;
   }
 

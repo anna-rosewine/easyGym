@@ -18,12 +18,17 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('@pet/global').then(m => m.GlobalModule)
   },
+  {
+    path: 'workout',
+    loadChildren: () => import('@pet/workouts/ui').then(m => m.WorkoutsUiModule)
+  },
 ];
 
 @NgModule({
   declarations: [AppComponent,
    ],
-  imports: [BrowserModule, AngularFireModule.initializeApp(environment.firebase),
+  imports: [BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
     RouterModule.forRoot(routes)],

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { Exercise } from '../../../../../../shared/functions/src/lib/interfaces';
+
 
 @Component({
   selector: 'pet-create-exercise',
@@ -7,7 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateExerciseComponent implements OnInit {
 
-  constructor() { }
+  constructor(private db: AngularFireDatabase) {
+  }
+
+  createExercise(){
+    const newExercise: Exercise = {
+      description: 'descr', id: 1, name: 'hyperextention', sets: [], workoutId: 1
+
+    }
+    const ref = this.db.list("exercise");
+    ref.push(newExercise).then((data) => {
+      console.log(data);
+    }).catch((err) => {
+      console.error(err)
+    })
+  }
 
   ngOnInit(): void {
   }
