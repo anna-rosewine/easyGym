@@ -24,7 +24,7 @@ export interface Exercise {
 
 export interface Set {
   id: number,
-  exerciseId: number,
+  // exerciseId: number,
   repetitions: number,
   weight: number
 }
