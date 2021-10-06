@@ -4,6 +4,7 @@ import { CreateExerciseComponent } from './components/create-exercise/create-exe
 import { CreateWorkoutComponent } from './components/create-workout/create-workout.component';
 import { RouterModule } from '@angular/router';
 import { SharedFunctionsModule } from '@pet/shared/functions';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [CommonModule,
@@ -14,8 +15,8 @@ import { SharedFunctionsModule } from '@pet/shared/functions';
       },
       {
         path: 'createWorkout', pathMatch: 'full', component: CreateWorkoutComponent
-      },
-    ]),],
+      }
+    ]), ReactiveFormsModule],
   declarations: [
     CreateExerciseComponent,
     CreateWorkoutComponent

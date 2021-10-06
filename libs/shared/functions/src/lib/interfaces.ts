@@ -1,31 +1,53 @@
 export interface User {
-  id: number,
+  id: string,
   firstName: string,
   email: string,
 }
 
 export interface Workout {
-  id: number,
+  id: string,
   name: string,
   date?: string,
-  exercises: Exercise[]
+  exercises: string[]
   weekType: string
 }
 
 export interface Exercise {
-  id: number,
-  name: string,
-  description: string,
+  id: string,
+  title: string,
+  description?: string,
   note?: string,
-  sets: Set[],
-  workoutId: number
+  planReps: number,
+  planSets: number,
+  planWeight?: number
+  realSets?: Set[],
+}
+
+export interface PlanExercise {
+  id: string,
+  title: string,
+  description?: string,
+  planReps: number,
+  planSets: number,
+  planWeight?: number
+}
+
+export interface ExecutedExercise {
+  id: string,
+  planExerciseID: string,
+  title?: string,
+  note?: string,
+  planReps: number,
+  planSets: number,
+  planWeight?: number
+  realSets?: Set[],
 }
 
 
 export interface Set {
-  id: number,
-  // exerciseId: number,
-  repetitions: number,
-  weight: number
+  id?: string,
+  repetitions?: number,
+  weight?: number,
+  withoutChanges: boolean
 }
 

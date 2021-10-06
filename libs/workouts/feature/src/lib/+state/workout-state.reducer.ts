@@ -3,6 +3,7 @@ import { createReducer, on, Action } from '@ngrx/store';
 
 import * as WorkoutStateActions from './workout-state.actions';
 import { WorkoutStateEntity } from './workout-state.models';
+import { Exercise, Workout } from '@pet/shared/functions';
 
 export const WORKOUTSTATE_FEATURE_KEY = 'workoutState';
 
@@ -10,6 +11,8 @@ export interface State extends EntityState<WorkoutStateEntity> {
   selectedId?: string | number; // which WorkoutState record has been selected
   loaded: boolean; // has the WorkoutState list been loaded
   error?: string | null; // last known error (if any)
+  exerciseList?: Exercise[]
+  workoutList?: Workout[]
 }
 
 export interface WorkoutStatePartialState {
@@ -37,7 +40,15 @@ const workoutStateReducer = createReducer(
   on(WorkoutStateActions.loadWorkoutStateFailure, (state, { error }) => ({
     ...state,
     error,
-  }))
+  })),
+  on(WorkoutStateActions.exerciseListSuccessfullyLoaded, (state, { exerciseList }) => ({
+    ...state,
+    exerciseList: exerciseList
+  })),
+  on(WorkoutStateActions.workoutListSuccessfullyLoaded, (state, { workoutList }) => ({
+    ...state,
+    workoutList: workoutList
+  })),
 );
 
 export function reducer(state: State | undefined, action: Action) {

@@ -4,6 +4,8 @@ import { fetch } from '@nrwl/angular';
 
 import * as WorkoutStateActions from './workout-state.actions';
 import * as WorkoutStateFeature from './workout-state.reducer';
+import { WorkoutService } from './workout.service';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 
 @Injectable()
 export class WorkoutStateEffects {
@@ -25,5 +27,34 @@ export class WorkoutStateEffects {
     )
   );
 
-  constructor(private readonly actions$: Actions) {}
+  createExercise$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(WorkoutStateActions.createExercise),
+      mergeMap((action) =>
+        this.workoutService.createExercise(action.exercise).pipe(
+          map(() => {
+            return WorkoutStateActions.exerciseSuccessfullyCreated();
+          }),
+          catchError(async (err) => WorkoutStateActions.exerciseCreatingFailed({ error: err }))
+        )
+      )
+    );
+  });
+
+  createExercise2$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(WorkoutStateActions.createExercise),
+      mergeMap((action) =>
+        this.workoutService.createExercise(action.exercise).pipe(
+          map(() => {
+            return WorkoutStateActions.exerciseSuccessfullyCreated();
+          }),
+          catchError(async (err) => WorkoutStateActions.exerciseCreatingFailed({ error: err }))
+        )
+      )
+    );
+  });
+
+  constructor(private readonly actions$: Actions,
+              private workoutService: WorkoutService) {}
 }

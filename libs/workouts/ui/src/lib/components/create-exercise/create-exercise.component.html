@@ -1,3 +1,19 @@
-<p (click)='back()'>Back</p>
-<p>create-exercise works!</p>
-<button (click)='createExercise()'>create </button>
+<p (click)='back()'>Назад</p>
+<form [formGroup]='exerciseForm'>
+  <label for='title'>Title</label>
+  <input required='required' type='text' id='title'  formControlName="title">
+  <br/>
+  <label for='description'>Description</label>
+  <input required='required' type='text' id='description'  formControlName="description">
+  <br/>
+  <label for='planReps'>Repetitions</label>
+  <input required='required' type='number' id='planReps'  formControlName="planReps">
+  <br/>
+  <label for='planSets'>Sets</label>
+  <input required='required' type='number' id='planSets'  formControlName="planSets">
+  <br/>
+  <label for='planWeight'>Weight</label>
+  <input required='required' type='number' id='planWeight'  formControlName="planWeight">
+</form>
+
+<button (click)='createExercise()'>Создать упражнение</button>

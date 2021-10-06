@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { doc, getDoc } from "firebase/firestore";
 import { Observable } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 
@@ -16,10 +17,15 @@ import { Observable } from 'rxjs';
 })
 export class CreateExerciseComponent implements OnInit {
   exercises: Observable<Exercise[]> | undefined;
-
+  exerciseForm = new FormGroup({
+    title: new FormControl(''),
+    description: new FormControl(''),
+    planReps: new FormControl(''),
+    planSets: new FormControl(''),
+    planWeight: new FormControl(''),
+  });
   constructor(private db: AngularFireDatabase, private afs: AngularFirestore,private location: Location) {
-
-
+    console.log(this.db.list<Exercise[]>("exercise").snapshotChanges())
   }
 
   back(){
@@ -27,10 +33,15 @@ export class CreateExerciseComponent implements OnInit {
   }
 
   createExercise(){
-    const newExercise: Exercise = {
-      description: 'descr', id: 1, name: 'hyperextention', sets: [], workoutId: 1
+    const newExercise: Omit<Exercise, "id"> = {
+      planSets: this.exerciseForm.value.planSets,
+      description: this.exerciseForm.value.description,
+      title: this.exerciseForm.value.title,
+      planReps: this.exerciseForm.value.planReps,
+      planWeight: this.exerciseForm.value.planWeight
     }
     const ref = this.db.list("exercise");
+    const realTimeDb = this.db.object("exercise");
     console.log(this.db.list<Exercise[]>("exercise").snapshotChanges())
     ref.push(newExercise).then((data) => {
       console.log(data);
@@ -44,6 +55,9 @@ export class CreateExerciseComponent implements OnInit {
      console.log(data)
    })
    console.log(this.exercises)
+    this.db.object("exercise").valueChanges().subscribe((data) => {
+     console.log(data)
+   })
   }
 
 }

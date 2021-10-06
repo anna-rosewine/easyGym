@@ -37,6 +37,16 @@ export const getSelectedId = createSelector(
   (state: State) => state.selectedId
 );
 
+export const exerciseList = createSelector(
+  getWorkoutStateState,
+  (state: State) => state.exerciseList
+);
+
+export const workoutList = createSelector(
+  getWorkoutStateState,
+  (state: State) => state.workoutList
+);
+
 export const getSelected = createSelector(
   getWorkoutStateEntities,
   getSelectedId,
