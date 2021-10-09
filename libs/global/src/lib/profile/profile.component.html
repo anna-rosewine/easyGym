@@ -1,8 +1,10 @@
-<p>profile works!</p>
 <p>
-  Hello, user
+Привет
 </p>
 
-<button (click)='createWorkout()'>Generate new workout</button>
-<button  (click)='createExercise()'>Generate new exercise</button>
+<div class='btnWrapper'>
+  <button (click)='createWorkout()' class='halfWidthBtn'>+ тренировка</button>
+  <button  (click)='createExercise()' class='halfWidthBtn'>+ упражнение</button>
+</div>
+
 <pet-navigation></pet-navigation>

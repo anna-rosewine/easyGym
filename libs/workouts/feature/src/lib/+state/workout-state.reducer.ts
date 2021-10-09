@@ -13,6 +13,7 @@ export interface State extends EntityState<WorkoutStateEntity> {
   error?: string | null; // last known error (if any)
   exerciseList?: Exercise[]
   workoutList?: Workout[]
+  selectedExercise?: Exercise
 }
 
 export interface WorkoutStatePartialState {
@@ -49,6 +50,7 @@ const workoutStateReducer = createReducer(
     ...state,
     workoutList: workoutList
   })),
+
 );
 
 export function reducer(state: State | undefined, action: Action) {

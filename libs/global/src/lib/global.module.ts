@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './profile/profile.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedUiModule } from '@pet/shared/ui';
+import { WorkoutsFeatureModule, WorkoutStateFacade } from '@pet/workouts/feature';
+import { StoreRouterConnectingModule} from '@ngrx/router-store';
 
 const routes: Routes = [
   {
@@ -15,11 +17,14 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule,
+    StoreRouterConnectingModule.forRoot({}),
     RouterModule.forChild(routes),
+    WorkoutsFeatureModule,
     SharedUiModule],
   declarations: [
     ProfileComponent
   ],
+  providers: [],
   exports: [ProfileComponent]
 })
 export class GlobalModule {}

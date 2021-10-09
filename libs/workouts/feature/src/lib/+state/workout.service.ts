@@ -1,36 +1,56 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import type { Exercise } from '@pet/shared/functions';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
+import type { Exercise, Workout } from '@pet/shared/functions';
+import { AngularFireDatabase, AngularFireList} from '@angular/fire/compat/database';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, of } from 'rxjs';
 import firebase from 'firebase/compat';
-import ThenableReference = firebase.database.ThenableReference;
+import * as cuid from 'cuid';
+import { from } from 'rxjs';
+import { fromPromise } from 'rxjs/internal-compatibility';
+
+
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class WorkoutService {
-  constructor(private http: HttpClient,private db: AngularFireDatabase, private afs: AngularFirestore) {}
+  private realTimeDbExercises: AngularFireList<unknown>;
+  private realTimeDbWorkouts: AngularFireList<unknown>;
+
+
+  constructor( private db: AngularFireDatabase, private afs: AngularFirestore) {
+    this.realTimeDbExercises =this.db.list("exercise");
+    this.realTimeDbWorkouts =this.db.list("workout");
+  }
 
   // getExerciseList():Observable<Exercise[]>{
   //
   // }
 
-  createExercise(newExercise:  Omit<Exercise, "id">): Observable<number>{
-    const ref = this.db.list("exercise");
-    const newExerciseToService: Exercise = {
-      ...newExercise,
-      id: String(Math.floor(Math.random()*1000))
-    }
-    // console.log(this.db.list<Exercise[]>("exercise").snapshotChanges())
-    ref.push(newExerciseToService).then((data) => {
-      console.log(data);
-      return of(1);
-    }).catch((err) => {
-      console.error(err)
-      return err
-    })
+  getExerciseList():Observable<Exercise[] | any[]>{
+    return this.db.list("exercise").valueChanges()
   }
+
+  createExercise(newExercise:  Omit<Exercise, "id">): Observable<void>{
+      const newExerciseToService: Exercise = {
+        ...newExercise,
+        id: cuid()
+      }
+      return  fromPromise(this.realTimeDbExercises.push(newExerciseToService).then())
+  }
+
+  getWorkoutList():Observable<Workout[] | any[]>{
+    return this.db.list("workout").valueChanges()
+  }
+
+  createWorkout(newWorkout: Omit<Workout, "id">): Observable<void>{
+    const newWorkoutToService: Workout = {
+      ...newWorkout,
+      id: cuid()
+    }
+    return  fromPromise(this.realTimeDbWorkouts.push(newWorkoutToService).then())
+  }
+
 }

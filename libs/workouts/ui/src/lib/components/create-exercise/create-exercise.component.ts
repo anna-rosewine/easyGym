@@ -6,6 +6,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { doc, getDoc } from "firebase/firestore";
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { WorkoutStateFacade } from '@pet/workouts/feature';
 
 
 
@@ -23,41 +25,40 @@ export class CreateExerciseComponent implements OnInit {
     planReps: new FormControl(''),
     planSets: new FormControl(''),
     planWeight: new FormControl(''),
+    weekType:  new FormControl(''),
   });
-  constructor(private db: AngularFireDatabase, private afs: AngularFirestore,private location: Location) {
-    console.log(this.db.list<Exercise[]>("exercise").snapshotChanges())
+
+  constructor(private workoutFacade: WorkoutStateFacade, private db: AngularFireDatabase, private afs: AngularFirestore,private location: Location, private router: Router) {
   }
 
   back(){
     this.location.back()
+    this.router.navigate(['/home'])
   }
 
   createExercise(){
+    console.log(this.exerciseForm.value.weekType)
     const newExercise: Omit<Exercise, "id"> = {
       planSets: this.exerciseForm.value.planSets,
       description: this.exerciseForm.value.description,
       title: this.exerciseForm.value.title,
       planReps: this.exerciseForm.value.planReps,
-      planWeight: this.exerciseForm.value.planWeight
+      planWeight: this.exerciseForm.value.planWeight,
+      weekType: this.exerciseForm.value.weekType
     }
-    const ref = this.db.list("exercise");
-    const realTimeDb = this.db.object("exercise");
-    console.log(this.db.list<Exercise[]>("exercise").snapshotChanges())
-    ref.push(newExercise).then((data) => {
-      console.log(data);
-    }).catch((err) => {
-      console.error(err)
+    this.workoutFacade.createExercise(newExercise);
+    this.exerciseForm.patchValue({
+      title: "",
+      description:"",
+      planReps: "",
+      planSets:"",
+      planWeight: "",
+      weekType: "",
     })
   }
 
  ngOnInit():void{
-   this.afs.collection<Exercise>('exercise').valueChanges().subscribe((data) => {
-     console.log(data)
-   })
-   console.log(this.exercises)
-    this.db.object("exercise").valueChanges().subscribe((data) => {
-     console.log(data)
-   })
+
   }
 
 }

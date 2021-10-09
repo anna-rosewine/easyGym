@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { WorkoutStateFacade } from '@pet/workouts/feature';
 
 @Component({
   selector: 'pet-profile',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private workoutFacade: WorkoutStateFacade) { }
   createExercise(){
     console.log('create exercise')
     this.router.navigate(['workout/createExercise'])
@@ -16,9 +17,15 @@ export class ProfileComponent implements OnInit {
 
   createWorkout(){
     console.log('create exercise')
-    this.router.navigate(['workout/createExercise'])
+    this.router.navigate(['workout/createWorkout'])
   }
   ngOnInit(): void {
+    this.workoutFacade.getExerciseList();
+    this.workoutFacade.exerciseList$.subscribe((data) => {
+      if(data){
+        console.log(data)
+      }
+    })
   }
 
 }

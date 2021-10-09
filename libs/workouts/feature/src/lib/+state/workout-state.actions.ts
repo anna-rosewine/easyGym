@@ -31,6 +31,22 @@ export const loadingExerciseListFailed= createAction(
   props<{error: Error }>()
 );
 
+export const getExerciseById = createAction(
+  '[WorkoutState/API] Get Exercise By Id',
+  props<{id: string }>()
+);
+
+
+export const exerciseByIdSuccessfullyLoaded = createAction(
+  '[WorkoutState/API] Exercise By Id Successfully Loaded',
+  props<{ exercise: Exercise }>()
+);
+
+
+export const loadingExerciseByIdFailed= createAction(
+  '[WorkoutState/API] Loading Exercise By Id Failed',
+  props<{error: Error }>()
+);
 
 export const createExercise = createAction(
   '[WorkoutState/API] Create Exercises',
@@ -42,7 +58,6 @@ export const exerciseSuccessfullyCreated = createAction(
   '[WorkoutState/API] Exercise  Successfully Created',
 
 );
-
 
 export const exerciseCreatingFailed = createAction(
   '[WorkoutState/API] ExerciseCreatingFailed',
@@ -61,5 +76,21 @@ export const workoutListSuccessfullyLoaded = createAction(
 
 export const loadingWorkoutListFailed= createAction(
   '[WorkoutState/API] Loading Workout List Failed',
+  props<{error: Error }>()
+);
+
+export const createWorkout = createAction(
+  '[WorkoutState/API] Create Workout',
+  props<{ workout: Omit<Workout, "id"> }>()
+);
+
+
+export const workoutSuccessfullyCreated = createAction(
+  '[WorkoutState/API] Workout  Successfully Created',
+
+);
+
+export const workoutCreatingFailed = createAction(
+  '[WorkoutState/API] Workout Creating Failed',
   props<{error: Error }>()
 );

@@ -12,25 +12,24 @@ export interface Workout {
   weekType: string
 }
 
+export interface ExecutedWorkout {
+  id: string,
+  name: string,
+  date?: string,
+  exercises: string[]
+  weekType: string
+}
+
 export interface Exercise {
   id: string,
   title: string,
+  weekType?: string
   description?: string,
-  note?: string,
   planReps: number,
   planSets: number,
   planWeight?: number
-  realSets?: Set[],
 }
 
-export interface PlanExercise {
-  id: string,
-  title: string,
-  description?: string,
-  planReps: number,
-  planSets: number,
-  planWeight?: number
-}
 
 export interface ExecutedExercise {
   id: string,
@@ -51,3 +50,7 @@ export interface Set {
   withoutChanges: boolean
 }
 
+export enum WeekType {
+  max="MAX",
+  min="MIN"
+}

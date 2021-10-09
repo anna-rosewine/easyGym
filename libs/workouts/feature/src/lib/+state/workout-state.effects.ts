@@ -41,19 +41,61 @@ export class WorkoutStateEffects {
     );
   });
 
-  createExercise2$ = createEffect(() => {
+  createWorkout$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(WorkoutStateActions.createExercise),
+      ofType(WorkoutStateActions.createWorkout),
       mergeMap((action) =>
-        this.workoutService.createExercise(action.exercise).pipe(
+        this.workoutService.createWorkout(action.workout).pipe(
           map(() => {
-            return WorkoutStateActions.exerciseSuccessfullyCreated();
+            return WorkoutStateActions.workoutSuccessfullyCreated();
           }),
-          catchError(async (err) => WorkoutStateActions.exerciseCreatingFailed({ error: err }))
+          catchError(async (err) => WorkoutStateActions.workoutCreatingFailed({ error: err }))
         )
       )
     );
   });
+  //
+  // createExercise2$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(WorkoutStateActions.createExercise),
+  //     mergeMap((action) =>
+  //       this.workoutService.createExercise(action.exercise).pipe(
+  //         map(() => {
+  //           return WorkoutStateActions.exerciseSuccessfullyCreated();
+  //         }),
+  //         catchError(async (err) => WorkoutStateActions.exerciseCreatingFailed({ error: err }))
+  //       )
+  //     )
+  //   );
+  // });
+
+  getExerciseList$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(WorkoutStateActions.getListOfExercises),
+      mergeMap((action) =>
+        this.workoutService.getExerciseList().pipe(
+          map((exerciseList) => {
+            return WorkoutStateActions.exerciseListSuccessfullyLoaded({exerciseList: exerciseList});
+          }),
+          catchError(async (err) => WorkoutStateActions.loadingExerciseListFailed({ error: err }))
+        )
+      )
+    );
+  });
+  getWorkoutList$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(WorkoutStateActions.getListOfWorkouts),
+      mergeMap((action) =>
+        this.workoutService.getWorkoutList().pipe(
+          map((workoutList) => {
+            return WorkoutStateActions.workoutListSuccessfullyLoaded({workoutList: workoutList});
+          }),
+          catchError(async (err) => WorkoutStateActions.loadingWorkoutListFailed({ error: err }))
+        )
+      )
+    );
+  });
+
 
   constructor(private readonly actions$: Actions,
               private workoutService: WorkoutService) {}

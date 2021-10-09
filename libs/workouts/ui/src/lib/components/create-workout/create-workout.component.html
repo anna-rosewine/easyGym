@@ -1,1 +1,25 @@
-<p>Создать тренировку</p>
+<p (click)='back()' class='back'>Назад</p>
+<form class='form' [formGroup]='workoutForm'>
+  <label for='title'>Название</label>
+  <input required='required' type='text' id='title'  formControlName="title">
+  <br/>
+  <div class='radioGroup'>
+    <label for='maxWeek' [style]='workoutForm.value.weekType==="MAX"?{"backgroundColor": "#000000", "color":"#ffffff"}:{"backgroundColor": "#ffffff", "color":"#000000"}'> <input type='radio' formControlName="weekType" style='opacity: 0' class='radio' id='maxWeek' value='MAX'>Максимум </label>
+    <label for='minWeek' [style]='workoutForm.value.weekType==="MIN"?{"backgroundColor": "#000000", "color":"#ffffff"}:{"backgroundColor": "#ffffff", "color":"#000000"}'><input type='radio' formControlName="weekType" style='opacity: 0' class='radio' value='MIN' id='minWeek'>Обычная</label>
+
+  </div>
+  <ng-multiselect-dropdown
+    [placeholder]="'выбери упражнения'"
+    [settings]="dropdownSettings"
+    [data]="dropdownList"
+
+    formControlName='exercises'
+    (onSelect)="onItemSelect($event)"
+  >
+  </ng-multiselect-dropdown>
+
+</form>
+<div class='btnWrapper'>
+  <button (click)='back()' class='ghostBtn halfWidthBtn'>Отменить</button>
+  <button (click)='createWorkout()' class=' halfWidthBtn'>Создать</button>
+</div>
