@@ -13,14 +13,13 @@ export class ChooseWorkoutComponent implements OnInit {
   chosenWorkoutId: string | undefined;
   constructor(private router: Router, private workoutFacade: WorkoutStateFacade) { }
   chooseWorkout(){
-    this.router.navigate(['/process/preWorkout'])
+    this.router.navigate([`/process/preWorkout/${this.chosenWorkoutId}`])
   }
 
   choose(workout: Workout){
     this.chosenWorkoutId = workout.id
     this.workoutFacade.selectWorkout$(this.chosenWorkoutId).subscribe((data) => {
       if(data){
-        console.log(data)
         this.workoutFacade.setChosenWorkout(data)
       }
     })

@@ -5,18 +5,30 @@
     </svg>
     <p (click)='back()'>Назад</p>
   </div>
-  <p *ngIf='chosenWorkout' class='weightBlack'>{{chosenWorkout.name}}</p>
+  <p *ngIf='chosenWorkout' class='weightBlack preWorkout_title'>{{chosenWorkout.name}}</p>
 </div>
 
 <div class='mainContainer'>
-  <div *ngIf='chosenWorkout'>
+  <div class='  preWorkout exercises' *ngIf='chosenWorkout'>
     <div *ngFor='let exercise of chosenWorkout.exercises' class='preWorkout_exercise'>
-      <p>{{exercise.title}}</p>
+      <p class='title'>{{exercise.title}}</p>
       <div class='flex'>
-        <p>{{exercise.planReps}}</p>
+        <div class='column'>
+          <p class='additional'>Подходы</p>
+          <p class='additional'>{{exercise.planSets}}</p>
+        </div>
+        <div class='column'>
+          <p class='additional'>Повторы</p>
+          <p class='additional'>{{exercise.planReps}}</p>
+        </div>
+        <div *ngIf='exercise.planWeight' class='column'>
+          <p  class='additional'>Вес</p>
+          <p class='additional'>{{exercise.planWeight}} кг</p>
+        </div>
+
       </div>
     </div>
-    <button (click)='startWorkout()'>Start workout</button>
-  </div>
 
+  </div>
+  <button (click)='startWorkout()'>Start workout</button>
 </div>

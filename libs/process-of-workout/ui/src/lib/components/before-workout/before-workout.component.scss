@@ -5,5 +5,33 @@
 }
 
 .preWorkout_title {
-
+  margin-top: 50px;
+  font-size: 30px;
 }
+
+.preWorkout {
+
+    padding: 12px;
+    width: 80%;
+    .preWorkout_exercise {
+      margin: 32px 0;
+    }
+    .title {
+      font-size: 18px;
+      font-weight: 400;
+    }
+    .flex {
+      justify-content: space-between;
+    }
+    .column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 6px;
+    }
+    .additional {
+      font-size: 13px;
+      color: grey;
+    }
+}
+

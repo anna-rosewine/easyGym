@@ -15,13 +15,13 @@ import { WorkoutsFeatureModule } from '@pet/workouts/feature';
     WorkoutsFeatureModule,
     RouterModule.forChild([
       {
-        path: 'preWorkout', pathMatch: 'full', component: BeforeWorkoutComponent
+        path: 'preWorkout/:workout_id', pathMatch: 'full', component: BeforeWorkoutComponent
       },
       {
         path: 'chooseWorkout', pathMatch: 'full', component:ChooseWorkoutComponent
       },
       {
-        path: 'exercise/:id', pathMatch: 'full', component: ExercisePageComponent
+        path: ':workout_id/:exercise_id', pathMatch: 'full', component: ExercisePageComponent
       },
       {
         path: 'finish', pathMatch: 'full', component: FinishComponent

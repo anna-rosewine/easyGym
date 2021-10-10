@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WorkoutStateFacade } from '@pet/workouts/feature';
-import { Workout } from '@pet/shared/functions';
+import { sortExercises, Workout } from '@pet/shared/functions';
 
 @Component({
   selector: 'pet-before-workout',
@@ -10,21 +10,38 @@ import { Workout } from '@pet/shared/functions';
 })
 export class BeforeWorkoutComponent implements OnInit {
   chosenWorkout: Workout | undefined;
+  workoutId: string;
 
-  constructor(private router: Router, private workoutFacade: WorkoutStateFacade) { }
+  constructor(private router: Router, private workoutFacade: WorkoutStateFacade, private route: ActivatedRoute,) {
+    this.workoutId = this.route.snapshot.params.workout_id;
+  }
 
   back(){
     this.router.navigate(['/process/chooseWorkout'])
   }
 
   startWorkout(){
-    this.router.navigate(['/process/exercise/1'])
+    this.router.navigate([ `/process/${this.workoutId}/1`])
   }
 
   ngOnInit(): void {
+    this.workoutFacade.getWorkoutList()
+    this.workoutFacade.selectWorkout$(this.workoutId).subscribe((data) => {
+      if(data){
+        this.chosenWorkout=data
+        this.chosenWorkout = {
+          ...this.chosenWorkout,
+          exercises: sortExercises(this.chosenWorkout.exercises)
+        }
+      }
+    })
     this.workoutFacade.chosenWorkout$.subscribe((data) => {
       if(data){
         this.chosenWorkout=data
+        this.chosenWorkout = {
+          ...this.chosenWorkout,
+          exercises: sortExercises(this.chosenWorkout.exercises)
+        }
       }
     })
   }
