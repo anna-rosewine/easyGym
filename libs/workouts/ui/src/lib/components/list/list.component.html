@@ -1,0 +1,12 @@
+<div class='mainContainer'>
+  <div (click)='toShow()' >
+    <div class='workoutItem' [style]='show ==="workout" ? {"backgroundColor": "#ECFF0D", "border": "1px solid #ECFF0D"} : {"backgroundColor": "#ffffff", "color": "#181818"}'>
+      <p>Тренировки</p>
+    </div>
+    <div class='workoutItem' [style]='show ==="exercise" ? {"backgroundColor": "#ECFF0D", "border": "1px solid #ECFF0D"} : {"backgroundColor": "#ffffff", "color": "#181818"}'>
+      <p>Упражнения</p>
+    </div>
+  </div>
+  <pet-navigation></pet-navigation>
+</div>
+

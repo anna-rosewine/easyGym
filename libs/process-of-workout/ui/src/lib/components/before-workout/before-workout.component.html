@@ -1,1 +1,22 @@
-<p>before-workout works!</p>
+<div class='preWorkout_top'>
+  <div class='flex'>
+    <svg style='margin-right: 8px' width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8.53499 0.514999L0.0499878 9L8.53499 17.485L9.94999 16.071L2.87799 9L9.94999 1.929L8.53499 0.514999Z" fill="#181818"/>
+    </svg>
+    <p (click)='back()'>Назад</p>
+  </div>
+  <p *ngIf='chosenWorkout' class='weightBlack'>{{chosenWorkout.name}}</p>
+</div>
+
+<div class='mainContainer'>
+  <div *ngIf='chosenWorkout'>
+    <div *ngFor='let exercise of chosenWorkout.exercises' class='preWorkout_exercise'>
+      <p>{{exercise.title}}</p>
+      <div class='flex'>
+        <p>{{exercise.planReps}}</p>
+      </div>
+    </div>
+    <button (click)='startWorkout()'>Start workout</button>
+  </div>
+
+</div>

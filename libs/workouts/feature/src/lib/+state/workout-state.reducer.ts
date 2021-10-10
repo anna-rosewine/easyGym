@@ -14,6 +14,9 @@ export interface State extends EntityState<WorkoutStateEntity> {
   exerciseList?: Exercise[]
   workoutList?: Workout[]
   selectedExercise?: Exercise
+  chosenWorkout?: Workout
+  chosenExercise?: Exercise
+
 }
 
 export interface WorkoutStatePartialState {
@@ -50,7 +53,10 @@ const workoutStateReducer = createReducer(
     ...state,
     workoutList: workoutList
   })),
-
+  on(WorkoutStateActions.setChosenWorkout, (state, { workout }) => ({
+    ...state,
+    chosenWorkout: workout
+  })),
 );
 
 export function reducer(state: State | undefined, action: Action) {

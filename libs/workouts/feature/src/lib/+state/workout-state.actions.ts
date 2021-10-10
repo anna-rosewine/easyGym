@@ -94,3 +94,9 @@ export const workoutCreatingFailed = createAction(
   '[WorkoutState/API] Workout Creating Failed',
   props<{error: Error }>()
 );
+
+export const setChosenWorkout = createAction(
+  '[WorkoutState/API] Set Chosen Workout',
+  props<{workout: Workout}>()
+);
+

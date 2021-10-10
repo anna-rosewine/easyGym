@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pet-navigation',
@@ -7,7 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+  startWorkout(){
+    this.router.navigate(['process/chooseWorkout'])
+  }
+
+  goHome(){
+    this.router.navigate(['/home'])
+
+  }
+
+  showList(){
+    this.router.navigate(['workout/list'])
+  }
 
   ngOnInit(): void {
   }

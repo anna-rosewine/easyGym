@@ -33,6 +33,7 @@ export class WorkoutService {
     return this.db.list("exercise").valueChanges()
   }
 
+
   createExercise(newExercise:  Omit<Exercise, "id">): Observable<void>{
       const newExerciseToService: Exercise = {
         ...newExercise,

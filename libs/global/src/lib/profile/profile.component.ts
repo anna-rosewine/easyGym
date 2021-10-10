@@ -19,6 +19,9 @@ export class ProfileComponent implements OnInit {
     console.log('create exercise')
     this.router.navigate(['workout/createWorkout'])
   }
+
+
+
   ngOnInit(): void {
     this.workoutFacade.getExerciseList();
     this.workoutFacade.exerciseList$.subscribe((data) => {

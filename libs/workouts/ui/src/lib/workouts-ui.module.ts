@@ -8,15 +8,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { WorkoutsFeatureModule } from '@pet/workouts/feature';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ListComponent } from './components/list/list.component';
+import { SharedUiModule } from '@pet/shared/ui';
 
 @NgModule({
   imports: [CommonModule,
     SharedFunctionsModule,
     StoreRouterConnectingModule.forRoot({}),
     WorkoutsFeatureModule,
+    SharedUiModule,
     RouterModule.forChild([
       {
         path: 'createExercise', pathMatch: 'full', component: CreateExerciseComponent
+      },
+      {
+        path: 'list', pathMatch: 'full', component: ListComponent
       },
       {
         path: 'createWorkout', pathMatch: 'full', component: CreateWorkoutComponent
@@ -24,7 +30,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     ]), ReactiveFormsModule, NgMultiSelectDropDownModule, FormsModule],
   declarations: [
     CreateExerciseComponent,
-    CreateWorkoutComponent
+    CreateWorkoutComponent,
+    ListComponent
   ],
 })
 export class WorkoutsUiModule {}

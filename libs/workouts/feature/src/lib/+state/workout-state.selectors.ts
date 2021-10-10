@@ -42,9 +42,24 @@ export const selectExercise = (id: string) =>
     exercises ? exercises.filter((c) => c.id === id)[0] : undefined
   );
 
+export const selectWorkout = (id: string) =>
+  createSelector(workoutList, (workouts) =>
+    workouts ? workouts.filter((w) => w.id === id)[0] : undefined
+  );
+
 export const exerciseList = createSelector(
   getWorkoutStateState,
   (state: State) => state.exerciseList
+);
+
+export const chosenWorkout = createSelector(
+  getWorkoutStateState,
+  (state: State) => state.chosenWorkout
+);
+
+export const chosenExercise = createSelector(
+  getWorkoutStateState,
+  (state: State) => state.chosenExercise
 );
 
 export const workoutList = createSelector(

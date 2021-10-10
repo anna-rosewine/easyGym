@@ -1,1 +1,17 @@
-<p>choose-workout works!</p>
+<div class='mainContainer'>
+  <div class='flex'>
+    <svg style='margin-right: 8px' width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8.53499 0.514999L0.0499878 9L8.53499 17.485L9.94999 16.071L2.87799 9L9.94999 1.929L8.53499 0.514999Z" fill="#181818"/>
+    </svg>
+    <p (click)='back()'>Назад</p>
+  </div>
+  <div>
+    <div   (click)='choose(workout)' *ngFor='let workout of workoutList'>
+      <div class='workoutItem' [style]='chosenWorkoutId===workout.id ? {"backgroundColor": "#ECFF0D", "border": "1px solid #ECFF0D"} : {"backgroundColor": "#ffffff", "color": "#181818"}'>
+        <p>{{workout.name}}</p>
+      </div>
+    </div>
+  </div>
+  <button (click)='chooseWorkout()'>Выбрать тренировку</button>
+
+</div>

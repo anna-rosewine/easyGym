@@ -1,10 +1,11 @@
-<p>
-Привет
-</p>
+<div class='mainContainer'>
+  <p class='weightBlack'>
+    Привет
+  </p>
 
-<div class='btnWrapper'>
-  <button (click)='createWorkout()' class='halfWidthBtn'>+ тренировка</button>
-  <button  (click)='createExercise()' class='halfWidthBtn'>+ упражнение</button>
+  <div class='btnWrapper'>
+    <button (click)='createWorkout()' class='halfWidthBtn'>+ тренировка</button>
+    <button (click)='createExercise()' class='halfWidthBtn'>+ упражнение</button>
+  </div>
+  <pet-navigation></pet-navigation>
 </div>
-
-<pet-navigation></pet-navigation>

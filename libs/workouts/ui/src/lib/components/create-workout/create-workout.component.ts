@@ -17,6 +17,7 @@ export class CreateWorkoutComponent implements OnInit {
   selectedItems: Exercise[] = [];
   // dropdownSettings = {};
   exercises: Observable<Exercise[]> | undefined;
+  exerciseListForWorkout: Exercise[];
   workoutForm = new FormGroup({
     title: new FormControl(''),
     exercises: new FormControl(''),
@@ -27,6 +28,7 @@ export class CreateWorkoutComponent implements OnInit {
   dropdownList: Exercise[] = [];
   dropdownSettings: IDropdownSettings;
   constructor(private router: Router, private workoutFacade: WorkoutStateFacade) {
+    this.exerciseListForWorkout = []
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
@@ -38,15 +40,21 @@ export class CreateWorkoutComponent implements OnInit {
   }
 
   onItemSelect(item: ListItem) {
-    console.log(this.workoutForm.value.exercises,);
+    if(item)
+    this.workoutFacade.selectExercise$(String(item.id)).subscribe((data) => {
+      if(data){
+        this.exerciseListForWorkout.push({...data})
+      }
+    })
   }
+
   back(){
     this.router.navigate(['/home'])
   }
 
   createWorkout(){
     const newWorkout: Omit<Workout, "id"> = {
-      exercises: this.workoutForm.value.exercises,
+      exercises: this.exerciseListForWorkout,
       name: this.workoutForm.value.title,
       weekType:  this.workoutForm.value.weekType
     }

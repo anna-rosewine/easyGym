@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pet-exercise-page',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExercisePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+  back(){
+    this.router.navigate(['/process/preWorkout'])
+  }
 
   ngOnInit(): void {
   }

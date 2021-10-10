@@ -25,6 +25,10 @@ const routes: Routes = [
     loadChildren: () => import('@pet/global').then(m => m.GlobalModule)
   },
   {
+    path: 'process',
+    loadChildren: () => import('@pet/process-of-workout/ui').then(m => m.ProcessOfWorkoutUiModule)
+  },
+  {
     path: 'workout',
     loadChildren: () => import('@pet/workouts/ui').then(m => m.WorkoutsUiModule)
   },

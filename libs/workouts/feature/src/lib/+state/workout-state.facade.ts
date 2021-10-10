@@ -24,8 +24,20 @@ export class WorkoutStateFacade {
   exerciseList$ = this.store.pipe(
     select(WorkoutStateSelectors.exerciseList)
   );
+  workoutList$ = this.store.pipe(
+    select(WorkoutStateSelectors.workoutList)
+  );
+  chosenWorkout$ = this.store.pipe(
+    select(WorkoutStateSelectors.chosenWorkout)
+  );
+  chosenExercise$ = this.store.pipe(
+    select(WorkoutStateSelectors.chosenExercise)
+  );
   selectExercise$ = (id: string) =>
     this.store.pipe(select(WorkoutStateSelectors.selectExercise(id)));
+
+  selectWorkout$ = (id: string) =>
+    this.store.pipe(select(WorkoutStateSelectors.selectWorkout(id)));
   // workoutList$ = this.store.pipe(
   //   select(WorkoutStateSelectors.workoutList)
   // );
@@ -56,6 +68,10 @@ export class WorkoutStateFacade {
 
   createWorkout(workout: Omit<Workout, "id">){
     this.store.dispatch(WorkoutStateActions.createWorkout({workout: workout}))
+  }
+
+  setChosenWorkout(workout: Workout){
+    this.store.dispatch(WorkoutStateActions.setChosenWorkout({workout: workout}))
   }
 
 
