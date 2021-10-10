@@ -11,7 +11,7 @@ import { sortExercises, Workout } from '@pet/shared/functions';
 export class BeforeWorkoutComponent implements OnInit {
   chosenWorkout: Workout | undefined;
   workoutId: string;
-
+  firstExerciseId: string | undefined
   constructor(private router: Router, private workoutFacade: WorkoutStateFacade, private route: ActivatedRoute,) {
     this.workoutId = this.route.snapshot.params.workout_id;
   }
@@ -21,7 +21,9 @@ export class BeforeWorkoutComponent implements OnInit {
   }
 
   startWorkout(){
-    this.router.navigate([ `/process/${this.workoutId}/1`])
+    if(this.firstExerciseId){
+      this.router.navigate([ `/process/${this.workoutId}/${this.firstExerciseId}`])
+    }
   }
 
   ngOnInit(): void {
@@ -42,6 +44,7 @@ export class BeforeWorkoutComponent implements OnInit {
           ...this.chosenWorkout,
           exercises: sortExercises(this.chosenWorkout.exercises)
         }
+        this.firstExerciseId = this.chosenWorkout.exercises[0].id
       }
     })
   }
