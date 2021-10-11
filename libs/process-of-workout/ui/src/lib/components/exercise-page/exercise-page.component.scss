@@ -1,0 +1,58 @@
+.exercise_item_set {
+  border: 1px solid #c6c6c6;
+  border-radius: 16px;
+  padding: 16px 26px;
+  width: 135px;
+  margin-top: 30px;
+  .flex {
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+    justify-content: space-between;
+  }
+
+  p {
+    color: #707070;
+    font-size: 13px;
+  }
+  .result {
+    color: #000000;
+    font-size: 24px;
+  }
+  .indicator {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #707070;
+    border-radius: 100%;
+    position: relative;
+    right: -6px;
+    background-color: #ffffff;
+  }
+}
+
+.isDone {
+  background-color: #ECFF0D;
+  border-color: #ECFF0D;
+  .indicator {
+    border-color: #ECFF0D;
+  }
+
+  .indicator:before {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 23px;
+    height: 23px;
+    background-color: #ECFF0D;
+    border-radius: 100%;
+    top: 8px;
+    left: 8px;
+  }
+}
+
+.exercise_set_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  justify-content: space-between;
+}

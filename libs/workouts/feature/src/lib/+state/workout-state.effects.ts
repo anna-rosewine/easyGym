@@ -54,6 +54,20 @@ export class WorkoutStateEffects {
       )
     );
   });
+
+  createExecutedWorkout$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(WorkoutStateActions.createExecutedWorkout),
+      mergeMap((action) =>
+        this.workoutService.createExecutedWorkout(action.workout).pipe(
+          map(() => {
+            return WorkoutStateActions.executedWorkoutSuccessfullyCreated();
+          }),
+          catchError(async (err) => WorkoutStateActions.executedWorkoutCreatingFailed({ error: err }))
+        )
+      )
+    );
+  });
   //
   // createExercise2$ = createEffect(() => {
   //   return this.actions$.pipe(

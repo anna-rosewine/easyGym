@@ -15,9 +15,10 @@ export interface Workout {
 export interface ExecutedWorkout {
   id: string,
   name: string,
-  date?: string,
-  exercises: string[]
-  weekType: string
+  planWorkoutId: string
+  date: string,
+  executedExercises: ExecutedExercise[]
+  weekType?: string
 }
 
 export interface Exercise {

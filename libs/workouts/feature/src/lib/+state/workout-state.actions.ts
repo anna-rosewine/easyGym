@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { WorkoutStateEntity } from './workout-state.models';
-import type { Exercise, Workout } from '@pet/shared/functions';
+import type { ExecutedWorkout, Exercise, Workout } from '@pet/shared/functions';
 
 export const init = createAction('[WorkoutState Page] Init');
 
@@ -94,6 +94,46 @@ export const workoutCreatingFailed = createAction(
   '[WorkoutState/API] Workout Creating Failed',
   props<{error: Error }>()
 );
+
+
+export const createExecutedWorkout = createAction(
+  '[WorkoutState/API] Create Executed Workout',
+  props<{ workout: ExecutedWorkout }>()
+);
+
+
+export const executedWorkoutSuccessfullyCreated = createAction(
+  '[WorkoutState/API] Executed Workout  Successfully Created',
+
+);
+
+export const executedWorkoutCreatingFailed = createAction(
+  '[WorkoutState/API] Executed Workout Creating Failed',
+  props<{error: Error }>()
+);
+
+export const updateExecutedWorkout = createAction(
+  '[WorkoutState/API] Update Executed Workout',
+  props<{ workout: ExecutedWorkout }>()
+);
+
+
+export const executedWorkoutSuccessfullyUpdated = createAction(
+  '[WorkoutState/API] Executed Workout  Successfully Updated',
+
+);
+
+export const executedWorkoutUpdatingFailed = createAction(
+  '[WorkoutState/API] Executed Workout Updating Failed',
+  props<{error: Error }>()
+);
+
+
+export const getExecutedWorkout = createAction(
+  '[WorkoutState/API] Get Executed Workout',
+  props<{ id: string }>()
+);
+
 
 export const setChosenWorkout = createAction(
   '[WorkoutState/API] Set Chosen Workout',

@@ -4,7 +4,7 @@ import { select, Store, Action } from '@ngrx/store';
 import * as WorkoutStateActions from './workout-state.actions';
 import * as WorkoutStateFeature from './workout-state.reducer';
 import * as WorkoutStateSelectors from './workout-state.selectors';
-import { Exercise, Workout } from '@pet/shared/functions';
+import { ExecutedWorkout, Exercise, Workout } from '@pet/shared/functions';
 
 @Injectable()
 export class WorkoutStateFacade {
@@ -69,6 +69,20 @@ export class WorkoutStateFacade {
   createWorkout(workout: Omit<Workout, "id">){
     this.store.dispatch(WorkoutStateActions.createWorkout({workout: workout}))
   }
+
+
+  createExecutedWorkout(workout: ExecutedWorkout){
+    this.store.dispatch(WorkoutStateActions.createExecutedWorkout({workout: workout}))
+  }
+
+  // getExecutedWorkout(workout: Omit<ExecutedWorkout, "id">){
+  //   this.store.dispatch(WorkoutStateActions.createExecutedWorkout({workout: workout}))
+  // }
+  //
+  // updateExecutedWorkout(workout: Omit<ExecutedWorkout, "id">){
+  //   this.store.dispatch(WorkoutStateActions.createExecutedWorkout({workout: workout}))
+  // }
+
 
   setChosenWorkout(workout: Workout){
     this.store.dispatch(WorkoutStateActions.setChosenWorkout({workout: workout}))
