@@ -13,15 +13,15 @@
   <div class='exercise_item'>
     <p class='exercise_item_title'></p>
     <div class='exercise_set_wrapper'>
-      <div class='exercise_item_set'>
+      <div *ngFor='let set of setArr' (click)='markSetAsDone(set.id || "1")'  class='exercise_item_set'>
         <div class='flex between'>
           <p>сет</p>
-          <p class='result'>15</p>
+          <p *ngIf='set.repetitions' class='result'>{{set.repetitions}}</p>
           <input style='display: none' type='text'>
         </div>
         <div class='flex between'>
           <p>вес</p>
-          <p  class='result'>6</p>
+          <p  class='result'>{{set.weight}}</p>
           <input style='display: none' type='text'>
         </div>
         <div class='flex between'>

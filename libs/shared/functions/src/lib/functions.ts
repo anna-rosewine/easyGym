@@ -7,6 +7,11 @@ export function back(){
 
 export function sortExercises(exerciseList: Exercise[]):Exercise[]{
   return exerciseList.slice().sort((a, b) => {
-    return a.title < b.title ? -1 : 1;
+    if(a.order && b.order){
+      return a.order < b.order ? -1 : 1;
+    } else {
+      return a.title < b.title ? -1 : 1;
+
+    }
   })
 }

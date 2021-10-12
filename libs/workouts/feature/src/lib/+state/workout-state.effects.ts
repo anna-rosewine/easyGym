@@ -46,7 +46,8 @@ export class WorkoutStateEffects {
       ofType(WorkoutStateActions.createWorkout),
       mergeMap((action) =>
         this.workoutService.createWorkout(action.workout).pipe(
-          map(() => {
+          map((key) => {
+            console.log(key.key, key.ref)
             return WorkoutStateActions.workoutSuccessfullyCreated();
           }),
           catchError(async (err) => WorkoutStateActions.workoutCreatingFailed({ error: err }))
@@ -60,10 +61,25 @@ export class WorkoutStateEffects {
       ofType(WorkoutStateActions.createExecutedWorkout),
       mergeMap((action) =>
         this.workoutService.createExecutedWorkout(action.workout).pipe(
-          map(() => {
+          map((key) => {
+            console.log(key)
             return WorkoutStateActions.executedWorkoutSuccessfullyCreated();
           }),
           catchError(async (err) => WorkoutStateActions.executedWorkoutCreatingFailed({ error: err }))
+        )
+      )
+    );
+  });
+
+  updateExecutedWorkout$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(WorkoutStateActions.updateExecutedWorkout),
+      mergeMap((action) =>
+        this.workoutService.updateExecutedWorkout(action.workout).pipe(
+          map(() => {
+            return WorkoutStateActions.executedWorkoutSuccessfullyUpdated();
+          }),
+          catchError(async (err) => WorkoutStateActions.executedWorkoutUpdatingFailed({ error: err }))
         )
       )
     );

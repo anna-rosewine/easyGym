@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkoutStateFacade } from '@pet/workouts/feature';
-import { sortExercises, Workout } from '@pet/shared/functions';
+import { ExecutedWorkout, sortExercises, Workout } from '@pet/shared/functions';
 
 @Component({
   selector: 'pet-before-workout',
@@ -24,6 +24,11 @@ export class BeforeWorkoutComponent implements OnInit {
     if(this.firstExerciseId){
       this.router.navigate([ `/process/${this.workoutId}/${this.firstExerciseId}`])
     }
+    const work: ExecutedWorkout = {
+      date: 'qwe', executedExercises: [], id: 'qwe', planWorkoutId: 'qwe'
+
+    }
+    this.workoutFacade.updateExecutedWorkout(work)
   }
 
   ngOnInit(): void {

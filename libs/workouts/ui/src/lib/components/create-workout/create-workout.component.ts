@@ -34,7 +34,7 @@ export class CreateWorkoutComponent implements OnInit {
       idField: 'id',
       textField: 'title',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
+      itemsShowLimit: 2,
       allowSearchFilter: true
     };
   }
@@ -43,7 +43,11 @@ export class CreateWorkoutComponent implements OnInit {
     if(item)
     this.workoutFacade.selectExercise$(String(item.id)).subscribe((data) => {
       if(data){
-        this.exerciseListForWorkout.push({...data})
+        const exercise: Exercise = {
+          ...data,
+          order: this.exerciseListForWorkout.length+1
+        }
+        this.exerciseListForWorkout.push({...exercise})
       }
     })
   }

@@ -83,6 +83,10 @@ export class WorkoutStateFacade {
   //   this.store.dispatch(WorkoutStateActions.createExecutedWorkout({workout: workout}))
   // }
 
+  updateExecutedWorkout(workout: ExecutedWorkout){
+    this.store.dispatch(WorkoutStateActions.updateExecutedWorkout({workout: workout}))
+  }
+
 
   setChosenWorkout(workout: Workout){
     this.store.dispatch(WorkoutStateActions.setChosenWorkout({workout: workout}))
