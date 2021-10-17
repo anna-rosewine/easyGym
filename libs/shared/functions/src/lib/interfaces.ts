@@ -24,6 +24,7 @@ export interface ExecutedWorkout {
 export interface Exercise {
   id: string,
   title: string,
+  key?: string
   weekType?: string
   description?: string,
   planReps: number,
@@ -58,6 +59,7 @@ export interface SetForUI  {
   weight?: number,
   withoutChanges: boolean
   isDone: boolean
+  editMode: boolean
 }
 
 export enum WeekType {

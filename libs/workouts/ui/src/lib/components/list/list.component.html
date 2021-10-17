@@ -1,12 +1,47 @@
 <div class='mainContainer'>
-  <div (click)='toShow()' >
-    <div class='workoutItem' [style]='show ==="workout" ? {"backgroundColor": "#ECFF0D", "border": "1px solid #ECFF0D"} : {"backgroundColor": "#ffffff", "color": "#181818"}'>
-      <p>Тренировки</p>
+  <div >
+    <div (click)='toShow()' class='flex between'>
+      <div class='workoutItem' >
+        <p [ngClass]='{chosen: showWorkout}'>Тренировки</p>
+      </div>
+<!--      [style]='show ==="exercise" ? {"backgroundColor": "#ECFF0D", "border": "1px solid #ECFF0D"} : {"backgroundColor": "#ffffff", "color": "#181818"}'-->
+      <div class='workoutItem'>
+        <p [ngClass]='{chosen: showExercise}'>Упражнения</p>
+      </div>
     </div>
-    <div class='workoutItem' [style]='show ==="exercise" ? {"backgroundColor": "#ECFF0D", "border": "1px solid #ECFF0D"} : {"backgroundColor": "#ffffff", "color": "#181818"}'>
-      <p>Упражнения</p>
+    <div *ngIf='workouts&&showWorkout' >
+      <div *ngFor='let workout of workouts'>
+        <div class='workoutName' >
+          <p>{{workout.name}}</p>
+        </div>
+      </div>
     </div>
+      <div class='  preWorkout exercises' *ngIf='exercises&&showExercise'>
+        <div *ngFor='let exercise of exercises' class='preWorkout_exercise'>
+          <p class='title'>{{exercise.title}}</p>
+          <div class='flex' style='margin: 6px 0;'>
+            <div class='column'>
+              <p class='additional'>{{exercise.description}}</p>
+            </div>
+          </div >
+
+          <div class='flex'>
+            <div class='column'>
+              <p class='additional'>Подходы</p>
+              <p class='additional'>{{exercise.planSets}}</p>
+            </div>
+            <div class='column'>
+              <p class='additional'>Повторы</p>
+              <p class='additional'>{{exercise.planReps}}</p>
+            </div>
+            <div *ngIf='exercise.planWeight' class='column'>
+              <p  class='additional'>Вес</p>
+              <p class='additional'>{{exercise.planWeight}} кг</p>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
-  <pet-navigation></pet-navigation>
+  <pet-navigation [activeBar]='"list"'></pet-navigation>
 </div>
 

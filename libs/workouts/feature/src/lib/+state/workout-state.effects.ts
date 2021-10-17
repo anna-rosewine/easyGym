@@ -6,6 +6,7 @@ import * as WorkoutStateActions from './workout-state.actions';
 import * as WorkoutStateFeature from './workout-state.reducer';
 import { WorkoutService } from './workout.service';
 import { catchError, map, mergeMap } from 'rxjs/operators';
+import { Exercise, Workout } from '@pet/shared/functions';
 
 @Injectable()
 export class WorkoutStateEffects {
@@ -20,7 +21,6 @@ export class WorkoutStateEffects {
           });
         },
         onError: (action, error) => {
-          console.error('Error', error);
           return WorkoutStateActions.loadWorkoutStateFailure({ error });
         },
       })
@@ -105,7 +105,15 @@ export class WorkoutStateEffects {
       mergeMap((action) =>
         this.workoutService.getExerciseList().pipe(
           map((exerciseList) => {
-            return WorkoutStateActions.exerciseListSuccessfullyLoaded({exerciseList: exerciseList});
+            const list: Exercise[] = []
+            exerciseList.forEach((e) => {
+              let exercise: Exercise = <Exercise>e.payload.doc.data();
+              exercise = {
+                ...exercise,
+              }
+              list.push(<Exercise>e.payload.doc.data())
+            })
+            return WorkoutStateActions.exerciseListSuccessfullyLoaded({exerciseList: list});
           }),
           catchError(async (err) => WorkoutStateActions.loadingExerciseListFailed({ error: err }))
         )
@@ -118,7 +126,11 @@ export class WorkoutStateEffects {
       mergeMap((action) =>
         this.workoutService.getWorkoutList().pipe(
           map((workoutList) => {
-            return WorkoutStateActions.workoutListSuccessfullyLoaded({workoutList: workoutList});
+            const list: Workout[] = [];
+            workoutList.forEach((a) => {
+              list.push( <Workout>a.payload.doc.data())
+            })
+            return WorkoutStateActions.workoutListSuccessfullyLoaded({workoutList: list});
           }),
           catchError(async (err) => WorkoutStateActions.loadingWorkoutListFailed({ error: err }))
         )

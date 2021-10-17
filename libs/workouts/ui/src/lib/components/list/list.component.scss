@@ -1,0 +1,35 @@
+.workoutItem {
+  width: 50%;
+  p {
+    position: relative;
+    font-weight: 600;
+    font-size:16px;
+    text-align: center
+  }
+}
+
+.workoutName {
+  padding: 16px 16px;
+  border: 1px solid #18181840;
+  border-radius: 9px;
+  margin: 18px 0;
+
+}
+.chosen:before, .chosen:after {
+  content: '';
+  display: block;
+  width:  150px;
+  height: 25px;
+  border: 1px solid #1f1f1f;
+  border-radius: 100%;
+  position: absolute;
+  top: -4px;
+  left: 10px;
+  z-index: 5;
+  transform: rotate(3deg);
+}
+
+.chosen:after{
+  transform: rotate(-1deg);
+
+}

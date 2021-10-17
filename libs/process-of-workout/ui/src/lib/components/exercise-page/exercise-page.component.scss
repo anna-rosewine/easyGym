@@ -55,4 +55,46 @@
   flex-wrap: wrap;
   padding: 20px;
   justify-content: space-between;
+  input{
+    height: 24px;
+    width: 24px;
+    font-size: 20px;
+  }
+}
+
+.exercise_finish {
+  padding: 4px 10px;
+  background-color: #ffbdbd;
+  border-radius: 4px;
+  margin-left: auto;
+  p {
+    font-size: 12px;
+    text-align: center;
+    color: #810000;
+  }
+}
+
+.editMode {
+  width: 307px;
+  //margin: 30px 0;
+}
+
+.editBtn {
+  display: block;
+  font-size: 48px;
+  width: 36px;
+  font-weight: bold;
+  color: #ffffff !important;
+  text-align: center;
+  background-color: #1f1f1f;
+  border-radius: 8px;
+  padding: 8px 8px;
+}
+.exercise_item{
+  .btn100 {
+    position: fixed;
+    bottom: 20px;
+    width: 355px;
+    margin: 0 auto;
+  }
 }

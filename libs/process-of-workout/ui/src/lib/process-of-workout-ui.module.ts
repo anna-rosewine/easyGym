@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { FinishComponent } from './components/finish/finish.component';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { WorkoutsFeatureModule } from '@pet/workouts/feature';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { WorkoutsFeatureModule } from '@pet/workouts/feature';
         path: 'preWorkout/:workout_id', pathMatch: 'full', component: BeforeWorkoutComponent
       },
       {
-        path: 'chooseWorkout', pathMatch: 'full', component:ChooseWorkoutComponent
+        path: 'chooseWorkout', pathMatch: 'full', component: ChooseWorkoutComponent
       },
       {
         path: ':workout_id/:exercise_id', pathMatch: 'full', component: ExercisePageComponent
@@ -26,7 +27,7 @@ import { WorkoutsFeatureModule } from '@pet/workouts/feature';
       {
         path: 'finish', pathMatch: 'full', component: FinishComponent
       }
-    ]),],
+    ]), FormsModule],
   declarations: [
     ChooseWorkoutComponent,
     BeforeWorkoutComponent,

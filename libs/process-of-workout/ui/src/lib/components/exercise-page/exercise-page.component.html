@@ -13,39 +13,70 @@
   <div class='exercise_item'>
     <p class='exercise_item_title'></p>
     <div class='exercise_set_wrapper'>
-      <div *ngFor='let set of setArr' (click)='markSetAsDone(set.id || "1")'  class='exercise_item_set'>
-        <div class='flex between'>
-          <p>сет</p>
-          <p *ngIf='set.repetitions' class='result'>{{set.repetitions}}</p>
-          <input style='display: none' type='text'>
+      <div *ngFor='let set of setArr'   >
+        <div [ngClass]='{isDone: set.isDone}' *ngIf='!set.editMode'  class='exercise_item_set'>
+          <div *ngIf='set.repetitions' (click)='changeMode(set, "onEditRepMode")' class='flex between'>
+            <p >сет</p>
+            <p *ngIf='set.repetitions' class='result'>{{set.repetitions}}</p>
+          </div>
+<!--          <div *ngIf='set.editRepsMode'  class='flex between'>-->
+<!--            <p (click)='changeMode(set, "offEditRepMode")'>сет</p>-->
+<!--            <input *ngIf='editedNumber' type='number' (ngModelChange)='check(editedNumber)' [(ngModel)]='editedNumber'>-->
+<!--&lt;!&ndash;            <p *ngIf='set.repetitions' class='result'>{{set.repetitions}}</p>&ndash;&gt;-->
+<!--          </div>-->
+          <div class='flex between'>
+            <p>вес</p>
+            <p  class='result'>{{set.weight}}</p>
+            <input style='display: none' type='text'>
+          </div>
+          <div class='flex between' (click)='markSetAsDone(set, $event)'>
+            <p>есть</p>
+            <div class='indicator'></div>
+          </div>
         </div>
-        <div class='flex between'>
-          <p>вес</p>
-          <p  class='result'>{{set.weight}}</p>
-          <input style='display: none' type='text'>
-        </div>
-        <div class='flex between'>
-          <p>есть</p>
-          <div class='indicator'></div>
+        <div [ngClass]='{isDone: set.isDone}' *ngIf='set.editMode'  class='exercise_item_set editMode'>
+          <div *ngIf='set.repetitions' (click)='changeMode(set, "onEditRepMode")' class='flex between'>
+            <p (click)='changeMode(set, "offEditRepMode")'>сет</p>
+            <p class='editBtn' (click)='changeSet(set, "decreaseReps")'>-</p>
+            <p *ngIf='set.repetitions' class='result'>{{set.repetitions}}</p>
+            <p class='editBtn' (click)='changeSet(set, "increaseReps")'>+</p>
+
+          </div>
+          <!--          <div *ngIf='set.editRepsMode'  class='flex between'>-->
+          <!--            <p (click)='changeMode(set, "offEditRepMode")'>сет</p>-->
+          <!--            <input *ngIf='editedNumber' type='number' (ngModelChange)='check(editedNumber)' [(ngModel)]='editedNumber'>-->
+          <!--&lt;!&ndash;            <p *ngIf='set.repetitions' class='result'>{{set.repetitions}}</p>&ndash;&gt;-->
+          <!--          </div>-->
+          <div class='flex between'>
+            <p (click)='changeMode(set, "offEditRepMode")'>вес</p>
+            <p class='editBtn' (click)='changeSet(set, "decreaseWeight")'>-</p>
+            <p  class='result'>{{set.weight}}</p>
+            <p class='editBtn' (click)='changeSet(set, "increaseWeight")'>+</p>
+          </div>
+          <div class='flex between' (click)='markSetAsDone(set, $event)'>
+            <p>есть</p>
+            <div class='indicator'></div>
+          </div>
         </div>
       </div>
-      <div class='exercise_item_set isDone'>
-        <div class='flex between'>
-          <p>сет</p>
-          <p class='result'>15</p>
-          <input style='display: none' type='text'>
-        </div>
-        <div class='flex between'>
-          <p>вес</p>
-          <p  class='result'>6</p>
-          <input style='display: none' type='text'>
-        </div>
-        <div class='flex between'>
-          <p>есть</p>
-          <div class='indicator'></div>
-        </div>
-      </div>
+<!--      <div class='exercise_item_set isDone'>-->
+<!--        <div class='flex between'>-->
+<!--          <p>сет</p>-->
+<!--          <p class='result'>15</p>-->
+<!--          <input style='display: none' type='text'>-->
+<!--        </div>-->
+<!--        <div class='flex between'>-->
+<!--          <p>вес</p>-->
+<!--          <p  class='result'>6</p>-->
+<!--          <input style='display: none' type='text'>-->
+<!--        </div>-->
+<!--        <div class='flex between' >-->
+<!--          <p>есть</p>-->
+<!--          <div class='indicator'></div>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
+    <button (click)='nextExercise()' class='btn100 '>Следующее упражнение</button>
 
   </div>
 

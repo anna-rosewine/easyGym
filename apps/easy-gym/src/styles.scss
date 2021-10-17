@@ -42,13 +42,13 @@ time, mark, audio, video {
 }
 
 
-$main-dark: #020202;
+$main-dark: #1f1f1f;
 $main-bright: #ECFF0D;
 $main-soft: #FBFFCF;
 $light-grey: #e1e1e1;
 $dark-grey: #3d3d3d;
 $secondary-dark: #181818;
-$accent-background-color: #020202;
+$accent-background-color: #1f1f1f;
 $accent-text-color: #ffffff;
 
 * {
@@ -72,6 +72,15 @@ body {
 .mainContainer {
   width: 100%;
 }
+.between{
+  justify-content: space-between;
+}
+
+.tip {
+  font-size: 14px;
+  color: #707070;
+  text-align: center;
+}
 
 .flex {
   display: flex;
@@ -85,11 +94,12 @@ body {
 .navigation {
   display: flex;
   justify-content: space-between;
-  padding: 10px 30px;
+  padding: 10px 50px;
   width: 90%;
   margin: 0 auto;
   position: fixed;
   bottom: 10px;
+  background-color: #ffffff;
 }
 
 button {
@@ -118,7 +128,37 @@ button {
 
 .halfWidthBtn {
   width: 48%;
+  position: relative;
+  z-index: 10;
 }
+
+
+
+.btn100 {
+  width: 100%;
+  height: 47px;
+  position: relative;
+  z-index: 10;
+}
+
+
+
+
+.halfWidthBtn:before, .btn100:before{
+  content: '';
+  display: block;
+  width:  100%;
+  height: 100%;
+  border: 1px solid #1f1f1f;
+  border-radius: 8px;
+  position: absolute;
+  top: 0px;
+  left: -5px;
+  z-index: 5;
+  transform: rotate(3deg);
+}
+
+
 
 .btnWrapper {
   display: flex;
@@ -175,4 +215,43 @@ button {
     }
   }
 }
+
+
+.preWorkout_top {
+  background-color: #ECFF0D;
+  height: 180px;
+  padding: 18px;
+}
+
+.preWorkout_title {
+  margin-top: 50px;
+  font-size: 30px;
+}
+
+.preWorkout {
+
+  padding: 12px;
+  width: 80%;
+  .preWorkout_exercise {
+    margin: 32px 0;
+  }
+  .title {
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .flex {
+    justify-content: space-between;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 6px;
+  }
+  .additional {
+    font-size: 13px;
+    color: grey;
+  }
+}
+
 

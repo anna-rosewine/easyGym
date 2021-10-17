@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import type { ExecutedWorkout, Exercise, Workout } from '@pet/shared/functions';
+import type { ExecutedExercise, ExecutedWorkout, Exercise, Workout } from '@pet/shared/functions';
 import { AngularFireDatabase, AngularFireList} from '@angular/fire/compat/database';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable, of } from 'rxjs';
+import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
+import { Observable, ObservedValueOf, of } from 'rxjs';
 import firebase from 'firebase/compat';
 import * as cuid from 'cuid';
 import { from } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { DataSnapshot } from '@angular/fire/compat/database/interfaces';
 import { getDatabase, ref, push, set } from "firebase/database";
+import { DocumentChangeAction } from '@angular/fire/compat/firestore/interfaces';
 
 
 
@@ -27,16 +28,6 @@ export class WorkoutService {
     this.realTimeDbExercises =this.db.list("exercise");
     this.realTimeDbWorkouts =this.db.list("workout");
     this.realTimeDbExecutedWorkouts =this.db.list("executedWorkout");
-    this.realTimeDbWorkouts.valueChanges().subscribe((data) => {
-      console.log(data.keys(), data.reverse())
-    })
-
-    // const db1 = getDatabase();
-    // const postListRef = ref(db1, 'workout');
-    // const newPostRef = push(postListRef);
-    // set(newPostRef, {
-    //   id: 1
-    // });
 
     this.realTimeDbWorkouts.snapshotChanges().subscribe((data) => {
       // data.map((i) => {console.log(i.key)})
@@ -49,22 +40,34 @@ export class WorkoutService {
   // getExerciseList():Observable<Exercise[]>{
   //
   // }
-
-  getExerciseList():Observable<Exercise[] | any[]>{
-    return this.db.list("exercise").valueChanges()
+  // Observable<Exercise[] | any[]>
+  getExerciseList():Observable<ObservedValueOf<Observable<DocumentChangeAction<unknown>[]>>>{
+    this.afs.collection('exercise').snapshotChanges().subscribe((data) => {
+      console.log(data[0].payload.doc.data())
+    })
+    return from (this.afs.collection('exercise').snapshotChanges());
+    // return this.db.list("exercise").valueChanges()
   }
 
 
-  createExercise(newExercise:  Omit<Exercise, "id">): Observable<void>{
+  createExercise(newExercise:  Omit<Exercise, "id">): Observable<ObservedValueOf<Promise<DocumentReference<unknown>>>>{
       const newExerciseToService: Exercise = {
         ...newExercise,
         id: cuid()
       }
-      return  fromPromise(this.realTimeDbExercises.push(newExerciseToService).then())
+      // return  fromPromise(this.realTimeDbExercises.push(newExerciseToService).then())
+    return  from(this.afs
+      .collection("exercise")
+      .add(newExerciseToService))
   }
 
-  getWorkoutList():Observable<Workout[] | any[] >{
-    return this.db.list("workout").valueChanges()
+  getWorkoutList():Observable<ObservedValueOf<Observable<DocumentChangeAction<unknown>[]>>>{
+    // this.afs.collection('exercise').snapshotChanges().subscribe((data) => {
+    //   console.log(data[0].payload.doc.data())
+    // })
+    return  from(this.afs.collection('workout').snapshotChanges())
+    // return from (this.afs.collection('workout').snapshotChanges());
+    // return this.db.list("workout").valueChanges()
   }
 
   createWorkout(newWorkout: Omit<Workout, "id">): Observable<DataSnapshot>{
@@ -72,7 +75,17 @@ export class WorkoutService {
       ...newWorkout,
       id: cuid()
     }
+    this.afs
+      .collection("workout")
+      .add(newWorkoutToService)
+      .then(res => {console.log('yep')}, err => console.log(err));
     return  fromPromise(this.realTimeDbWorkouts.push(newWorkoutToService).get().then())
+  }
+
+  createExecutedExercise(executedExercise: ExecutedExercise){
+    return  from(this.afs
+      .collection("executedExercise")
+      .add(executedExercise))
   }
 
   createExecutedWorkout(newWorkout: ExecutedWorkout): Observable<string>{
