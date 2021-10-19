@@ -66,6 +66,16 @@ export const workoutList = createSelector(
   getWorkoutStateState,
   (state: State) => state.workoutList
 );
+export const currentExecutedWorkout = createSelector(
+  getWorkoutStateState,
+  (state: State) => state.currentExecutedWorkout
+);
+
+
+export const executedWorkoutKey = createSelector(
+  getWorkoutStateState,
+  (state: State) => state.executedWorkoutKey
+);
 
 export const getSelected = createSelector(
   getWorkoutStateEntities,

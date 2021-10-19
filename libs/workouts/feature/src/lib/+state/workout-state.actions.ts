@@ -87,7 +87,6 @@ export const createWorkout = createAction(
 
 export const workoutSuccessfullyCreated = createAction(
   '[WorkoutState/API] Workout  Successfully Created',
-
 );
 
 export const workoutCreatingFailed = createAction(
@@ -104,7 +103,7 @@ export const createExecutedWorkout = createAction(
 
 export const executedWorkoutSuccessfullyCreated = createAction(
   '[WorkoutState/API] Executed Workout  Successfully Created',
-
+  props<{ executedWorkoutKey: string }>()
 );
 
 export const executedWorkoutCreatingFailed = createAction(
@@ -112,27 +111,47 @@ export const executedWorkoutCreatingFailed = createAction(
   props<{error: Error }>()
 );
 
+export const getExecutedWorkout = createAction(
+  '[WorkoutState/API] Get Executed Workout',
+  props<{ key:string }>()
+);
+
+export const emptyAction =  createAction(
+  '[WorkoutState/API] Empty',
+);
+
+
+export const executedWorkoutSuccessfullyLoaded = createAction(
+  '[WorkoutState/API] Executed Workout  Successfully Loaded',
+  props<{ executedWorkout: ExecutedWorkout  }>()
+);
+
+export const executedWorkoutLoadingFailed = createAction(
+  '[WorkoutState/API] Executed Workout Loading Failed',
+  props<{error: Error }>()
+);
+
 export const updateExecutedWorkout = createAction(
   '[WorkoutState/API] Update Executed Workout',
-  props<{ workout: ExecutedWorkout }>()
+  props<{ key:string, executedWorkout: ExecutedWorkout }>()
 );
 
 
 export const executedWorkoutSuccessfullyUpdated = createAction(
   '[WorkoutState/API] Executed Workout  Successfully Updated',
-
+  // props<{ executedWorkout: ExecutedWorkout }>()
 );
 
 export const executedWorkoutUpdatingFailed = createAction(
-  '[WorkoutState/API] Executed Workout Updating Failed',
+  '[WorkoutState/API] Executed Workout Loading Failed',
   props<{error: Error }>()
 );
 
-
-export const getExecutedWorkout = createAction(
-  '[WorkoutState/API] Get Executed Workout',
-  props<{ id: string }>()
+export const clearExecutedWorkoutKey = createAction(
+  '[WorkoutState/API] Clear Executed Workout Key',
 );
+
+
 
 
 export const setChosenWorkout = createAction(

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkoutStateFacade } from '@pet/workouts/feature';
 import { ExecutedWorkout, sortExercises, Workout } from '@pet/shared/functions';
+import * as cuid from 'cuid';
 
 @Component({
   selector: 'pet-before-workout',
@@ -21,14 +22,14 @@ export class BeforeWorkoutComponent implements OnInit {
   }
 
   startWorkout(){
-    if(this.firstExerciseId){
-      this.router.navigate([ `/process/${this.workoutId}/${this.firstExerciseId}`])
-    }
-    const work: ExecutedWorkout = {
-      date: 'qwe', executedExercises: [], id: 'qwe', planWorkoutId: 'qwe'
 
+    const executedWorkout: ExecutedWorkout = {
+      date: Date.now().toString(),
+      executedExercises: [], id: cuid(),
+      planWorkoutId: '',
     }
-    this.workoutFacade.updateExecutedWorkout(work)
+    this.workoutFacade.createExecutedWorkout(executedWorkout)
+    // this.workoutFacade.updateExecutedWorkout(work)
   }
 
   ngOnInit(): void {
@@ -42,6 +43,11 @@ export class BeforeWorkoutComponent implements OnInit {
         }
       }
     })
+    this.workoutFacade.executedWorkoutKey$.subscribe((data) => {
+      if(data){
+        this.router.navigate([ `/process/${data}/${this.firstExerciseId}`])
+      }
+    })
     this.workoutFacade.chosenWorkout$.subscribe((data) => {
       if(data){
         this.chosenWorkout=data
@@ -53,5 +59,4 @@ export class BeforeWorkoutComponent implements OnInit {
       }
     })
   }
-
 }

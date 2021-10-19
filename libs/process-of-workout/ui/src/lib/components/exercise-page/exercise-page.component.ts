@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkoutStateFacade } from '@pet/workouts/feature';
-import { ExecutedExercise, Exercise, SetForUI, sortExercises, Workout } from '@pet/shared/functions';
+import { ExecutedExercise, ExecutedWorkout, Exercise, SetForUI, sortExercises, Workout } from '@pet/shared/functions';
 import * as cuid from 'cuid';
 import { from } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -25,6 +25,7 @@ export class ExercisePageComponent implements OnInit {
   editedNumber: number | undefined;
   nextExerciseId: string | undefined;
   chosenExerciseOrder: number | undefined;
+  executedWorkout: ExecutedWorkout | undefined;
 
   constructor(private router: Router, private route: ActivatedRoute, private afs: AngularFirestore, private workoutFacade: WorkoutStateFacade) {
     this.workoutId = this.route.snapshot.params.workout_id;
@@ -33,13 +34,18 @@ export class ExercisePageComponent implements OnInit {
   }
 
   nextExercise() :void{
-    if(this.executedExercise){
+    if(this.executedWorkout&&this.executedExercise){
       this.executedExercise.realSets = this.setArr
-      from(this.afs
-        .collection("executedExercise")
-        .add(this.executedExercise))
+      const newExs: ExecutedExercise[] = Object.assign([],this.executedWorkout.executedExercises)
+      newExs.push(this.executedExercise)
+      this.executedWorkout ={
+        ...this.executedWorkout,
+        executedExercises:   newExs
+      }
+      this.executedWorkout.executedExercises.push(this.executedExercise)
+      this.workoutFacade.updateExecutedWorkout(this.workoutId, this.executedWorkout)
     }
-    this.router.navigate([`/process/${this.workoutId}/`])
+    // this.router.navigate([`/process/${this.workoutId}/`])
   }
 
   back(){
@@ -77,7 +83,6 @@ export class ExercisePageComponent implements OnInit {
     if(num===0){
       this.editedNumber =1
     }
-    console.log(this.editedNumber)
   }
 
 
@@ -90,7 +95,6 @@ export class ExercisePageComponent implements OnInit {
       offEditWeightMode = 'offEditWeightMode',
     }
 
-    console.log(this.editedNumber)
     switch (mes) {
       case message.onEditRepMode:
         this.editedNumber=set.repetitions
@@ -116,7 +120,6 @@ export class ExercisePageComponent implements OnInit {
 
   markSetAsDone(set: SetForUI, e?: Event){
       set.isDone = !set.isDone
-      console.log(this.setArr)
   }
 
   downloadNextExercise(){
@@ -128,9 +131,17 @@ export class ExercisePageComponent implements OnInit {
     }
   }
 
+  getExecutedWorkout(){
+    if(!this.executedWorkout){
+      this.workoutFacade.getExecutedWorkout(this.workoutId)
+    }
+  }
+
+
   ngOnInit(): void {
     this.workoutFacade.getWorkoutList()
     this.workoutFacade.getExerciseList();
+    this.getExecutedWorkout()
     this.workoutFacade.selectWorkout$(this.workoutId).subscribe((data) => {
       if(data){
         this.chosenWorkout=data
@@ -140,6 +151,11 @@ export class ExercisePageComponent implements OnInit {
         }
 
         this.nextExerciseId = this.chosenWorkout.exercises[1].id
+      }
+    })
+    this.workoutFacade.currentExecutedWorkout$.subscribe((data) => {
+      if(data){
+        this.executedWorkout = data
       }
     })
     this.workoutFacade.selectExercise$(this.exerciseId).subscribe((data) => {
@@ -155,7 +171,7 @@ export class ExercisePageComponent implements OnInit {
           realSets: [],
           title: ''
         }
-        console.log(data)
+
         const plannedSet: SetForUI = {
           isDone: false,
           withoutChanges: true,
@@ -177,7 +193,6 @@ export class ExercisePageComponent implements OnInit {
             }
            this.setArr.push(s)
           })
-          console.log(this.setArr)
         }
       }
     })

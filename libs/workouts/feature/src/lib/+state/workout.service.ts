@@ -82,23 +82,43 @@ export class WorkoutService {
     return  fromPromise(this.realTimeDbWorkouts.push(newWorkoutToService).get().then())
   }
 
-  createExecutedExercise(executedExercise: ExecutedExercise){
+  createExecutedExercise(executedExercise: ExecutedExercise):Observable<ObservedValueOf<Promise<DocumentReference<unknown>>>>{
+
     return  from(this.afs
       .collection("executedExercise")
       .add(executedExercise))
   }
 
-  createExecutedWorkout(newWorkout: ExecutedWorkout): Observable<string>{
-    return  fromPromise(this.db.list(`workout`).push(newWorkout).get().then())
+  getExecutedWorkout(key:string):Observable<ObservedValueOf<Observable<DocumentChangeAction<unknown>[]>>>{
+    return  from(this.afs
+      .collection(`executedWorkout`)
+      .snapshotChanges())
   }
+
+  updateExecutedWorkoutByKey(key:string, updatedExecutedWorkout: ExecutedWorkout){
+    return  from(this.afs
+      .collection(`executedExercise`)
+      .doc(key).update(updatedExecutedWorkout))
+  }
+
+  createExecutedWorkout(executedWorkout: ExecutedWorkout):Observable<ObservedValueOf<Promise<DocumentReference<unknown>>>>{
+    return  from(this.afs
+      .collection("executedWorkout")
+      .add(executedWorkout))
+  }
+  //
+  // createExecutedWorkout(newWorkout: ExecutedWorkout): Observable<string>{
+  //   return  fromPromise(this.db.list(`workout`).push(newWorkout).get().then())
+  // }
 
   getListOfExecutedWorkout( ):Observable<{type: string, key: string} | ExecutedWorkout[] | any[]>{
     return this.realTimeDbExecutedWorkouts.snapshotChanges()
   }
 
-  updateExecutedWorkout(newWorkout: ExecutedWorkout): Observable<void>{
-
-    return  fromPromise(this.realTimeDbExecutedWorkouts.update('-MleW8HCzreZP9EktDd1', newWorkout).then())
+  updateExecutedWorkout(key:string, workout: ExecutedWorkout): Observable<ExecutedWorkout | unknown>{
+    return  from(this.afs
+    .collection(`executedWorkout`)
+    .doc(key).update(workout))
   }
 
 }

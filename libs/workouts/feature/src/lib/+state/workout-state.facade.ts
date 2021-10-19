@@ -30,6 +30,12 @@ export class WorkoutStateFacade {
   chosenWorkout$ = this.store.pipe(
     select(WorkoutStateSelectors.chosenWorkout)
   );
+  currentExecutedWorkout$ = this.store.pipe(
+    select(WorkoutStateSelectors.currentExecutedWorkout)
+  );
+  executedWorkoutKey$ = this.store.pipe(
+    select(WorkoutStateSelectors.executedWorkoutKey)
+  );
   chosenExercise$ = this.store.pipe(
     select(WorkoutStateSelectors.chosenExercise)
   );
@@ -75,16 +81,16 @@ export class WorkoutStateFacade {
     this.store.dispatch(WorkoutStateActions.createExecutedWorkout({workout: workout}))
   }
 
-  // getExecutedWorkout(workout: Omit<ExecutedWorkout, "id">){
-  //   this.store.dispatch(WorkoutStateActions.createExecutedWorkout({workout: workout}))
-  // }
+  getExecutedWorkout(key:string){
+    this.store.dispatch(WorkoutStateActions.getExecutedWorkout({key: key}))
+  }
   //
   // updateExecutedWorkout(workout: Omit<ExecutedWorkout, "id">){
   //   this.store.dispatch(WorkoutStateActions.createExecutedWorkout({workout: workout}))
   // }
 
-  updateExecutedWorkout(workout: ExecutedWorkout){
-    this.store.dispatch(WorkoutStateActions.updateExecutedWorkout({workout: workout}))
+  updateExecutedWorkout(key:string, workout: ExecutedWorkout){
+    this.store.dispatch(WorkoutStateActions.updateExecutedWorkout({key: key, executedWorkout: workout}))
   }
 
 

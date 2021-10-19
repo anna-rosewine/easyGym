@@ -6,7 +6,7 @@ import * as WorkoutStateActions from './workout-state.actions';
 import * as WorkoutStateFeature from './workout-state.reducer';
 import { WorkoutService } from './workout.service';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import { Exercise, Workout } from '@pet/shared/functions';
+import { ExecutedWorkout, Exercise, Workout } from '@pet/shared/functions';
 
 @Injectable()
 export class WorkoutStateEffects {
@@ -61,9 +61,9 @@ export class WorkoutStateEffects {
       ofType(WorkoutStateActions.createExecutedWorkout),
       mergeMap((action) =>
         this.workoutService.createExecutedWorkout(action.workout).pipe(
-          map((key) => {
-            console.log(key)
-            return WorkoutStateActions.executedWorkoutSuccessfullyCreated();
+          map((doc) => {
+            console.log(doc.id)
+            return WorkoutStateActions.executedWorkoutSuccessfullyCreated({executedWorkoutKey: doc.id});
           }),
           catchError(async (err) => WorkoutStateActions.executedWorkoutCreatingFailed({ error: err }))
         )
@@ -71,12 +71,48 @@ export class WorkoutStateEffects {
     );
   });
 
+
+  getExecutedWorkout$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(WorkoutStateActions.getExecutedWorkout),
+      mergeMap((action) =>
+        this.workoutService.getExecutedWorkout(action.key).pipe(
+          map((executedWorkoutsList) => {
+            const list: ExecutedWorkout[] = []
+            console.log(executedWorkoutsList.keys())
+            let find = false
+            let neededW: ExecutedWorkout | undefined = undefined
+            executedWorkoutsList.forEach((e) => {
+              console.log(e.payload.doc.id)
+              const w: ExecutedWorkout = <ExecutedWorkout>e.payload.doc.data();
+              if(e.payload.doc.id == action.key){
+                find = true
+                neededW = w
+              }
+
+              list.push(<ExecutedWorkout>e.payload.doc.data())
+            })
+            if(!neededW){
+             return WorkoutStateActions.executedWorkoutLoadingFailed({ error: new Error() })
+            } else {
+              return WorkoutStateActions.executedWorkoutSuccessfullyLoaded({executedWorkout: neededW})
+            }
+            // return WorkoutStateActions.executedWorkoutSuccessfullyLoaded({executedWorkout:work});
+          }),
+          catchError(async (err) => WorkoutStateActions.executedWorkoutLoadingFailed({ error: err }))
+        )
+      )
+    );
+  });
+
+
   updateExecutedWorkout$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(WorkoutStateActions.updateExecutedWorkout),
       mergeMap((action) =>
-        this.workoutService.updateExecutedWorkout(action.workout).pipe(
-          map(() => {
+        this.workoutService.updateExecutedWorkout(action.key, action.executedWorkout).pipe(
+          map((w) => {
+            console.log('up')
             return WorkoutStateActions.executedWorkoutSuccessfullyUpdated();
           }),
           catchError(async (err) => WorkoutStateActions.executedWorkoutUpdatingFailed({ error: err }))
