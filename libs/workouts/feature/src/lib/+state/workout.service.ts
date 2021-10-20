@@ -93,11 +93,11 @@ export class WorkoutService {
       .snapshotChanges())
   }
 
-  updateExecutedWorkoutByKey(key:string, updatedExecutedWorkout: ExecutedWorkout){
-    return  from(this.afs
-      .collection(`executedExercise`)
-      .doc(key).update(updatedExecutedWorkout))
-  }
+  // updateExecutedWorkoutByKey(key:string, updatedExecutedWorkout: ExecutedWorkout){
+  //   return  from(this.afs
+  //     .collection(`executedExercise`)
+  //     .doc(key).update(updatedExecutedWorkout))
+  // }
 
   createExecutedWorkout(executedWorkout: ExecutedWorkout):Observable<ObservedValueOf<Promise<DocumentReference<unknown>>>>{
     return  from(this.afs
@@ -114,10 +114,8 @@ export class WorkoutService {
   }
 
   updateExecutedWorkout(key:string, workout: ExecutedWorkout): Observable<ExecutedWorkout | unknown>{
-
     return  from(this.afs
     .collection(`executedWorkout`)
     .doc(key).update(workout))
   }
-
 }

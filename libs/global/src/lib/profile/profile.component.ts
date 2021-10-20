@@ -23,10 +23,11 @@ export class ProfileComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.workoutFacade.getExerciseList();
     this.workoutFacade.exerciseList$.subscribe((data) => {
       if(data){
-        console.log(data)
+        // console.log(data)
+      } else {
+        this.workoutFacade.getExerciseList();
       }
     })
   }

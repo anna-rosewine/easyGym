@@ -1,1 +1,16 @@
-<p>finish works!</p>
+<div class='bg'>
+  <div class='mainContainer'>
+    <div class='table' *ngIf='executedWorkout'>
+      <div *ngFor='let exercise of executedWorkout.executedExercises'>
+        <div>{{exercise.title}}
+        {{exercise.planSets}} {{exercise.planReps}} {{exercise.planReps}}</div>
+
+        <div *ngFor='let realSet of exercise.realSets'>
+          {{realSet.repetitions}} x {{realSet.weight}}кг
+        </div>
+      </div>
+    </div>
+    <button (click)='home()' class='btn100'>Вернутьсяв профиль</button>
+  </div>
+
+</div>

@@ -8,12 +8,14 @@ import { FinishComponent } from './components/finish/finish.component';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { WorkoutsFeatureModule } from '@pet/workouts/feature';
 import { FormsModule } from '@angular/forms';
+import { SharedFunctionsModule } from '../../../../shared/functions/src';
 
 
 @NgModule({
   imports: [CommonModule,
     StoreRouterConnectingModule.forRoot({}),
     WorkoutsFeatureModule,
+    SharedFunctionsModule,
     RouterModule.forChild([
       {
         path: 'preWorkout/:workout_id', pathMatch: 'full', component: BeforeWorkoutComponent
@@ -25,7 +27,7 @@ import { FormsModule } from '@angular/forms';
         path: ':workout_key/:workout_id/:exercise_id', pathMatch: 'full', component: ExercisePageComponent
       },
       {
-        path: 'finish', pathMatch: 'full', component: FinishComponent
+        path: 'finish/:workout_key', pathMatch: 'full', component: FinishComponent
       }
     ]), FormsModule],
   declarations: [

@@ -29,78 +29,21 @@ export class ExercisePageComponent implements OnInit {
   executedWorkout: ExecutedWorkout | undefined;
   workoutKey: string;
 
-  constructor(private router: Router, route: ActivatedRoute, private afs: AngularFirestore, private workoutFacade: WorkoutStateFacade, private location: Location) {
-    console.log('constructor')
+  constructor(private router: Router, private route: ActivatedRoute,  private workoutFacade: WorkoutStateFacade, private location: Location) {
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
     };
-    this.workoutId = route.snapshot.params.workout_id;
-    this.workoutKey = route.snapshot.params.workout_key;
-    this.exerciseId = route.snapshot.params.exercise_id;
-    console.log(this.exerciseId)
-   route.params.subscribe(val => {
-     this.workoutId = route.snapshot.params.workout_id;
-     this.workoutKey = route.snapshot.params.workout_key;
-     this.exerciseId = route.snapshot.params.exercise_id;
-      this.downloadNeededData()
-
-      this.workoutFacade.selectWorkout$(this.workoutId).subscribe((data) => {
-        if(data){
-          this.chosenWorkout=data
-          this.chosenPlannedExercise = this.chosenWorkout.exercises.filter((e) => e.id == this.exerciseId)[0]
-          if(this.chosenPlannedExercise){
-            this.executedExercise = {
-              id: cuid(),
-              note: '',
-              planExerciseID: this.chosenPlannedExercise.id,
-              planReps: this.chosenPlannedExercise.planReps,
-              planSets: this.chosenPlannedExercise.planSets,
-              planWeight: this.chosenPlannedExercise.planWeight,
-              realSets: [],
-              title: ''
-            }
-            const plannedSet: SetForUI = {
-              isDone: false,
-              withoutChanges: true,
-              repetitions: this.chosenPlannedExercise.planReps,
-              weight: this.chosenPlannedExercise.planWeight,
-              id: cuid(),
-              // editWeightMode: false,
-              editMode: false
-            }
-            const sameArr: SetForUI[] = []
-            if(this.setArr.length<1){
-              for (let i = 0; i < this.executedExercise.planSets; i++){
-                sameArr.push(plannedSet)
-              }
-              sameArr.forEach((s) => {
-                s = {
-                  ...s,
-                  id: cuid()
-                }
-                this.setArr.push(s)
-              })
-            }
-          }
-          this.chosenWorkout = {
-            ...this.chosenWorkout,
-            exercises: sortExercises(this.chosenWorkout.exercises)
-          }
-          const currentExerciseIndex = this.chosenWorkout.exercises.findIndex((e) => e.id === this.exerciseId)
-          if(currentExerciseIndex)
-            this.nextExerciseId = this.chosenWorkout.exercises[currentExerciseIndex+1].id
-        }
-      })
-      this.workoutFacade.currentExecutedWorkout$.subscribe((data) => {
-        if(data){
-          this.executedWorkout = data
-        }
-      })
-    });
+    this.workoutId = this.route.snapshot.params.workout_id;
+    this.workoutKey = this.route.snapshot.params.workout_key;
+    this.exerciseId = this.route.snapshot.params.exercise_id;
+   // route.params.subscribe(val => {
+   //
+   //  });
 
   }
 
   nextExercise() :void{
+    console.log('next')
     if(this.executedWorkout&&this.executedExercise){
       this.executedExercise.realSets = this.setArr
       const newExs: ExecutedExercise[] = Object.assign([],this.executedWorkout.executedExercises)
@@ -109,7 +52,8 @@ export class ExercisePageComponent implements OnInit {
         ...this.executedWorkout,
         executedExercises:   newExs
       }
-      this.executedWorkout.executedExercises.push(this.executedExercise)
+      // this.executedWorkout.executedExercises.push(this.executedExercise)
+      console.log(this.executedWorkout)
       this.workoutFacade.updateExecutedWorkout(this.workoutKey, this.executedWorkout)
     }
     this.downloadNextExercise()
@@ -193,12 +137,16 @@ export class ExercisePageComponent implements OnInit {
 
   downloadNextExercise(){
     if(this.chosenPlannedExercise&&this.chosenPlannedExercise.order&&this.chosenWorkout) {
-      this.chosenExerciseOrder = this.chosenPlannedExercise.order;
-      this.nextExerciseId = this.chosenWorkout.exercises[this.chosenExerciseOrder].id
-      this.router.navigate([`/process/${this.workoutKey}/${this.workoutId}/${this.nextExerciseId}`]).then()
-      // this.downloadNeededData()
-
-      // return  this.nextExerciseId;
+      if(this.chosenWorkout.exercises[this.chosenPlannedExercise.order]){
+        this.nextExerciseId = this.chosenWorkout.exercises[this.chosenPlannedExercise.order].id
+        console.log(this.nextExerciseId)
+      if(this.nextExerciseId){
+        this.router.navigate([`/process/${this.workoutKey}/${this.workoutId}/${this.nextExerciseId}`]).then()
+      }} else {
+        this.router.navigate([`/process/finish/${this.workoutKey}`])
+      }
+      } else {
+      this.router.navigate([`/process/finish/${this.workoutKey}`])
     }
   }
 
@@ -209,11 +157,9 @@ export class ExercisePageComponent implements OnInit {
   }
 
   downloadNeededData(){
-    console.log(this.exerciseId)
-    // this.workoutId = route.snapshot.params.workout_id;
-    // this.workoutKey = route.snapshot.params.workout_key;
-    // this.exerciseId = route.snapshot.params.exercise_id;
-    console.log(this.exerciseId, 'again')
+    this.workoutId = this.route.snapshot.params.workout_id;
+    this.workoutKey = this.route.snapshot.params.workout_key;
+    this.exerciseId = this.route.snapshot.params.exercise_id;
     this.workoutFacade.getWorkoutList()
     this.workoutFacade.getExerciseList();
     this.getExecutedWorkout()
@@ -224,6 +170,61 @@ export class ExercisePageComponent implements OnInit {
     console.log('ngonInit')
 
 
+    this.downloadNeededData()
+
+    this.workoutFacade.selectWorkout$(this.workoutId).subscribe((data) => {
+      if(data){
+        this.chosenWorkout=data
+        this.chosenPlannedExercise = this.chosenWorkout.exercises.filter((e) => e.id == this.exerciseId)[0]
+        if(this.chosenPlannedExercise){
+          this.executedExercise = {
+            id: cuid(),
+            note: '',
+            planExerciseID: this.chosenPlannedExercise.id,
+            planReps: this.chosenPlannedExercise.planReps,
+            planSets: this.chosenPlannedExercise.planSets,
+            planWeight: this.chosenPlannedExercise.planWeight,
+            realSets: [],
+            title: ''
+          }
+          const plannedSet: SetForUI = {
+            isDone: false,
+            withoutChanges: true,
+            repetitions: this.chosenPlannedExercise.planReps,
+            weight: this.chosenPlannedExercise.planWeight,
+            id: cuid(),
+            // editWeightMode: false,
+            editMode: false
+          }
+          const sameArr: SetForUI[] = []
+          if(this.setArr.length<1){
+            for (let i = 0; i < this.executedExercise.planSets; i++){
+              sameArr.push(plannedSet)
+            }
+            sameArr.forEach((s) => {
+              s = {
+                ...s,
+                id: cuid()
+              }
+              this.setArr.push(s)
+            })
+          }
+        }
+        this.chosenWorkout = {
+          ...this.chosenWorkout,
+          exercises: sortExercises(this.chosenWorkout.exercises)
+        }
+        const currentExerciseIndex = this.chosenWorkout.exercises.findIndex((e) => e.id === this.exerciseId)
+        if(currentExerciseIndex)
+          if(this.chosenWorkout.exercises[currentExerciseIndex+1])
+          this.nextExerciseId = this.chosenWorkout.exercises[currentExerciseIndex+1].id
+      }
+    })
+    this.workoutFacade.currentExecutedWorkout$.subscribe((data) => {
+      if(data){
+        this.executedWorkout = data
+      }
+    })
   }
 
 }
