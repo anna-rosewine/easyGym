@@ -22,7 +22,7 @@ import { FormsModule } from '@angular/forms';
         path: 'chooseWorkout', pathMatch: 'full', component: ChooseWorkoutComponent
       },
       {
-        path: ':workout_id/:exercise_id', pathMatch: 'full', component: ExercisePageComponent
+        path: ':workout_key/:workout_id/:exercise_id', pathMatch: 'full', component: ExercisePageComponent
       },
       {
         path: 'finish', pathMatch: 'full', component: FinishComponent

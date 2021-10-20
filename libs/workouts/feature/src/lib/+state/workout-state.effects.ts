@@ -47,7 +47,6 @@ export class WorkoutStateEffects {
       mergeMap((action) =>
         this.workoutService.createWorkout(action.workout).pipe(
           map((key) => {
-            console.log(key.key, key.ref)
             return WorkoutStateActions.workoutSuccessfullyCreated();
           }),
           catchError(async (err) => WorkoutStateActions.workoutCreatingFailed({ error: err }))
@@ -62,7 +61,6 @@ export class WorkoutStateEffects {
       mergeMap((action) =>
         this.workoutService.createExecutedWorkout(action.workout).pipe(
           map((doc) => {
-            console.log(doc.id)
             return WorkoutStateActions.executedWorkoutSuccessfullyCreated({executedWorkoutKey: doc.id});
           }),
           catchError(async (err) => WorkoutStateActions.executedWorkoutCreatingFailed({ error: err }))
@@ -79,11 +77,9 @@ export class WorkoutStateEffects {
         this.workoutService.getExecutedWorkout(action.key).pipe(
           map((executedWorkoutsList) => {
             const list: ExecutedWorkout[] = []
-            console.log(executedWorkoutsList.keys())
             let find = false
             let neededW: ExecutedWorkout | undefined = undefined
             executedWorkoutsList.forEach((e) => {
-              console.log(e.payload.doc.id)
               const w: ExecutedWorkout = <ExecutedWorkout>e.payload.doc.data();
               if(e.payload.doc.id == action.key){
                 find = true

@@ -143,7 +143,7 @@ export const executedWorkoutSuccessfullyUpdated = createAction(
 );
 
 export const executedWorkoutUpdatingFailed = createAction(
-  '[WorkoutState/API] Executed Workout Loading Failed',
+  '[WorkoutState/API] Executed Workout Updating Failed',
   props<{error: Error }>()
 );
 

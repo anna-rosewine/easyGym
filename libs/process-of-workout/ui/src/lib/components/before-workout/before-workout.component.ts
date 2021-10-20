@@ -45,7 +45,8 @@ export class BeforeWorkoutComponent implements OnInit {
     })
     this.workoutFacade.executedWorkoutKey$.subscribe((data) => {
       if(data){
-        this.router.navigate([ `/process/${data}/${this.firstExerciseId}`])
+        const workoutKey = data
+        this.router.navigate([ `/process/${workoutKey}/${this.workoutId}/${this.firstExerciseId}`])
       }
     })
     this.workoutFacade.chosenWorkout$.subscribe((data) => {

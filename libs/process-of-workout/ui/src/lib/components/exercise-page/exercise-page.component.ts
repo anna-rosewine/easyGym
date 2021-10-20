@@ -4,6 +4,7 @@ import { WorkoutStateFacade } from '@pet/workouts/feature';
 import { ExecutedExercise, ExecutedWorkout, Exercise, SetForUI, sortExercises, Workout } from '@pet/shared/functions';
 import * as cuid from 'cuid';
 import { from } from 'rxjs';
+import {Location} from '@angular/common';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 
@@ -26,10 +27,76 @@ export class ExercisePageComponent implements OnInit {
   nextExerciseId: string | undefined;
   chosenExerciseOrder: number | undefined;
   executedWorkout: ExecutedWorkout | undefined;
+  workoutKey: string;
 
-  constructor(private router: Router, private route: ActivatedRoute, private afs: AngularFirestore, private workoutFacade: WorkoutStateFacade) {
-    this.workoutId = this.route.snapshot.params.workout_id;
-    this.exerciseId = this.route.snapshot.params.exercise_id;
+  constructor(private router: Router, route: ActivatedRoute, private afs: AngularFirestore, private workoutFacade: WorkoutStateFacade, private location: Location) {
+    console.log('constructor')
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+    };
+    this.workoutId = route.snapshot.params.workout_id;
+    this.workoutKey = route.snapshot.params.workout_key;
+    this.exerciseId = route.snapshot.params.exercise_id;
+    console.log(this.exerciseId)
+   route.params.subscribe(val => {
+     this.workoutId = route.snapshot.params.workout_id;
+     this.workoutKey = route.snapshot.params.workout_key;
+     this.exerciseId = route.snapshot.params.exercise_id;
+      this.downloadNeededData()
+
+      this.workoutFacade.selectWorkout$(this.workoutId).subscribe((data) => {
+        if(data){
+          this.chosenWorkout=data
+          this.chosenPlannedExercise = this.chosenWorkout.exercises.filter((e) => e.id == this.exerciseId)[0]
+          if(this.chosenPlannedExercise){
+            this.executedExercise = {
+              id: cuid(),
+              note: '',
+              planExerciseID: this.chosenPlannedExercise.id,
+              planReps: this.chosenPlannedExercise.planReps,
+              planSets: this.chosenPlannedExercise.planSets,
+              planWeight: this.chosenPlannedExercise.planWeight,
+              realSets: [],
+              title: ''
+            }
+            const plannedSet: SetForUI = {
+              isDone: false,
+              withoutChanges: true,
+              repetitions: this.chosenPlannedExercise.planReps,
+              weight: this.chosenPlannedExercise.planWeight,
+              id: cuid(),
+              // editWeightMode: false,
+              editMode: false
+            }
+            const sameArr: SetForUI[] = []
+            if(this.setArr.length<1){
+              for (let i = 0; i < this.executedExercise.planSets; i++){
+                sameArr.push(plannedSet)
+              }
+              sameArr.forEach((s) => {
+                s = {
+                  ...s,
+                  id: cuid()
+                }
+                this.setArr.push(s)
+              })
+            }
+          }
+          this.chosenWorkout = {
+            ...this.chosenWorkout,
+            exercises: sortExercises(this.chosenWorkout.exercises)
+          }
+          const currentExerciseIndex = this.chosenWorkout.exercises.findIndex((e) => e.id === this.exerciseId)
+          if(currentExerciseIndex)
+            this.nextExerciseId = this.chosenWorkout.exercises[currentExerciseIndex+1].id
+        }
+      })
+      this.workoutFacade.currentExecutedWorkout$.subscribe((data) => {
+        if(data){
+          this.executedWorkout = data
+        }
+      })
+    });
 
   }
 
@@ -43,12 +110,14 @@ export class ExercisePageComponent implements OnInit {
         executedExercises:   newExs
       }
       this.executedWorkout.executedExercises.push(this.executedExercise)
-      this.workoutFacade.updateExecutedWorkout(this.workoutId, this.executedWorkout)
+      this.workoutFacade.updateExecutedWorkout(this.workoutKey, this.executedWorkout)
     }
-    // this.router.navigate([`/process/${this.workoutId}/`])
+    this.downloadNextExercise()
+
   }
 
   back(){
+    // this.location.back();
     this.router.navigate([`/process/preWorkout/${this.workoutId}`])
   }
 
@@ -123,79 +192,38 @@ export class ExercisePageComponent implements OnInit {
   }
 
   downloadNextExercise(){
-    if(this.chosenPlannedExercise&&this.chosenPlannedExercise.order&&this.chosenWorkout){
+    if(this.chosenPlannedExercise&&this.chosenPlannedExercise.order&&this.chosenWorkout) {
       this.chosenExerciseOrder = this.chosenPlannedExercise.order;
-        // const nextExercise = this.chosenWorkout.exercises.find((e) => e.order=== this.chosenPlannedExercise.order+1)
-      this.nextExerciseId = this.chosenWorkout.exercises[1].id
+      this.nextExerciseId = this.chosenWorkout.exercises[this.chosenExerciseOrder].id
+      this.router.navigate([`/process/${this.workoutKey}/${this.workoutId}/${this.nextExerciseId}`]).then()
+      // this.downloadNeededData()
 
+      // return  this.nextExerciseId;
     }
   }
 
   getExecutedWorkout(){
     if(!this.executedWorkout){
-      this.workoutFacade.getExecutedWorkout(this.workoutId)
+      this.workoutFacade.getExecutedWorkout(this.workoutKey)
     }
+  }
+
+  downloadNeededData(){
+    console.log(this.exerciseId)
+    // this.workoutId = route.snapshot.params.workout_id;
+    // this.workoutKey = route.snapshot.params.workout_key;
+    // this.exerciseId = route.snapshot.params.exercise_id;
+    console.log(this.exerciseId, 'again')
+    this.workoutFacade.getWorkoutList()
+    this.workoutFacade.getExerciseList();
+    this.getExecutedWorkout()
   }
 
 
   ngOnInit(): void {
-    this.workoutFacade.getWorkoutList()
-    this.workoutFacade.getExerciseList();
-    this.getExecutedWorkout()
-    this.workoutFacade.selectWorkout$(this.workoutId).subscribe((data) => {
-      if(data){
-        this.chosenWorkout=data
-        this.chosenWorkout = {
-          ...this.chosenWorkout,
-          exercises: sortExercises(this.chosenWorkout.exercises)
-        }
+    console.log('ngonInit')
 
-        this.nextExerciseId = this.chosenWorkout.exercises[1].id
-      }
-    })
-    this.workoutFacade.currentExecutedWorkout$.subscribe((data) => {
-      if(data){
-        this.executedWorkout = data
-      }
-    })
-    this.workoutFacade.selectExercise$(this.exerciseId).subscribe((data) => {
-      if(data) {
-        this.chosenPlannedExercise = data
-        this.executedExercise = {
-          id: cuid(),
-          note: '',
-          planExerciseID: this.chosenPlannedExercise.id,
-          planReps: this.chosenPlannedExercise.planReps,
-          planSets: this.chosenPlannedExercise.planSets,
-          planWeight: this.chosenPlannedExercise.planWeight,
-          realSets: [],
-          title: ''
-        }
 
-        const plannedSet: SetForUI = {
-          isDone: false,
-          withoutChanges: true,
-          repetitions: data.planReps,
-          weight: data.planWeight,
-          id: cuid(),
-          // editWeightMode: false,
-          editMode: false
-        }
-        const sameArr: SetForUI[] = []
-        if(this.setArr.length<1){
-          for (let i = 0; i < this.executedExercise.planSets; i++){
-            sameArr.push(plannedSet)
-          }
-          sameArr.forEach((s) => {
-             s = {
-              ...s,
-              id: cuid()
-            }
-           this.setArr.push(s)
-          })
-        }
-      }
-    })
   }
 
 }

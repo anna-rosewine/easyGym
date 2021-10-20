@@ -15,3 +15,4 @@ export function sortExercises(exerciseList: Exercise[]):Exercise[]{
     }
   })
 }
+

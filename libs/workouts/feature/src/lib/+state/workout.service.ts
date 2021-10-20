@@ -42,9 +42,7 @@ export class WorkoutService {
   // }
   // Observable<Exercise[] | any[]>
   getExerciseList():Observable<ObservedValueOf<Observable<DocumentChangeAction<unknown>[]>>>{
-    this.afs.collection('exercise').snapshotChanges().subscribe((data) => {
-      console.log(data[0].payload.doc.data())
-    })
+
     return from (this.afs.collection('exercise').snapshotChanges());
     // return this.db.list("exercise").valueChanges()
   }
@@ -116,6 +114,7 @@ export class WorkoutService {
   }
 
   updateExecutedWorkout(key:string, workout: ExecutedWorkout): Observable<ExecutedWorkout | unknown>{
+
     return  from(this.afs
     .collection(`executedWorkout`)
     .doc(key).update(workout))
