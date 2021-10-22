@@ -65,7 +65,7 @@ export class CreateWorkoutComponent implements OnInit {
     this.workoutFacade.createWorkout(newWorkout);
     this.workoutForm.patchValue({
       exercises: "",
-      name: "",
+      title: "",
       weekType: "",
     })
   }
