@@ -3,11 +3,9 @@
     <div style='background-color: #1f1f1f' class='profile_darkTop'>
       <div class='header flex between'>
         <p class='weightBlack'>
-          Привет
+          Привет, <br/> <span *ngIf='name'>{{name}}</span>
         </p>
-        <svg width="38" height="26" viewBox="0 0 38 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4.75 21L31 21M4.75 6L31 6M19.75 13.5L31 13.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
+        <img (click)='logout()' src="https://img.icons8.com/small/32/ffffff/logout-rounded.png"/>
       </div>
       <div class='phrase'>
         <p class='phrase'>Найди свой <br/> <span class='balance'>баланс</span> <br/>и двигайся </p>

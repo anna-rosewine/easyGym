@@ -155,9 +155,22 @@ button {
   top: 0px;
   left: -5px;
   z-index: 5;
-  transform: rotate(3deg);
+  transform: rotate(2deg);
 }
 
+.brightBtn:before {
+  content: '';
+  display: block;
+  width:  100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+  position: absolute;
+  top: 0px;
+  left: -5px;
+  z-index: 5;
+  transform: rotate(3deg);
+}
 
 
 .btnWrapper {
@@ -251,6 +264,53 @@ button {
   .additional {
     font-size: 13px;
     color: grey;
+  }
+}
+
+.login {
+  .greeting {
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    img {
+      display: block;
+      margin: 50px auto 20px;
+    }
+
+    p {
+      font-size: 14px;
+      text-align: center;
+      margin: 20px;
+      color: #b2b2b2;
+    }
+    .logo {
+      font-size: 36px;
+      color: #ffffff;
+      font-weight: 900;
+      text-align: center;
+    }
+
+  }
+  .hiddenBtn {
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 600;
+    margin: 20px;
+  }
+  .brightBtn{
+    width: 320px;
+    display: block;
+    margin: 30px auto;
+  }
+  .form {
+    margin-top: 30px;
+    input {
+      background-color: transparent;
+      border-bottom: 1px solid #ffffff;
+      width: 320px;
+      color: #ffffff;
+      margin: 18px auto;
+    }
   }
 }
 

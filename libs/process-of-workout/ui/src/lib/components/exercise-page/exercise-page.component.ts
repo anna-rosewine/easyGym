@@ -44,6 +44,28 @@ export class ExercisePageComponent implements OnInit {
 
   nextExercise() :void{
     console.log('next')
+    // if(this.executedWorkout&&this.executedExercise){
+    //   this.executedExercise.realSets = this.setArr
+    //   const newExs: ExecutedExercise[] = Object.assign([],this.executedWorkout.executedExercises)
+    //   newExs.push(this.executedExercise)
+    //   this.executedWorkout ={
+    //     ...this.executedWorkout,
+    //     executedExercises:   newExs
+    //   }
+    //   // this.executedWorkout.executedExercises.push(this.executedExercise)
+    //   console.log(this.executedWorkout)
+    //   this.workoutFacade.updateExecutedWorkout(this.workoutKey, this.executedWorkout)
+    // }
+    this.updateWorkout()
+    this.downloadNextExercise()
+  }
+
+  toFinish(){
+    this.updateWorkout()
+    this.router.navigate([`/process/finish/${this.workoutKey}`])
+  }
+
+  updateWorkout(){
     if(this.executedWorkout&&this.executedExercise){
       this.executedExercise.realSets = this.setArr
       const newExs: ExecutedExercise[] = Object.assign([],this.executedWorkout.executedExercises)
@@ -56,7 +78,6 @@ export class ExercisePageComponent implements OnInit {
       console.log(this.executedWorkout)
       this.workoutFacade.updateExecutedWorkout(this.workoutKey, this.executedWorkout)
     }
-    this.downloadNextExercise()
 
   }
 
@@ -87,7 +108,7 @@ export class ExercisePageComponent implements OnInit {
         break;
       case message.decreaseWeight:
         if(set.weight)
-          ++set.weight;
+          --set.weight;
         break;
     }
   }
@@ -133,6 +154,7 @@ export class ExercisePageComponent implements OnInit {
 
   markSetAsDone(set: SetForUI, e?: Event){
       set.isDone = !set.isDone
+    set.editMode = false;
   }
 
   downloadNextExercise(){
@@ -185,7 +207,7 @@ export class ExercisePageComponent implements OnInit {
             planSets: this.chosenPlannedExercise.planSets,
             planWeight: this.chosenPlannedExercise.planWeight,
             realSets: [],
-            title: ''
+            title: this.chosenPlannedExercise.title
           }
           const plannedSet: SetForUI = {
             isDone: false,

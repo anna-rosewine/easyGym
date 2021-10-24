@@ -116,20 +116,6 @@ export class WorkoutStateEffects {
       )
     );
   });
-  //
-  // createExercise2$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(WorkoutStateActions.createExercise),
-  //     mergeMap((action) =>
-  //       this.workoutService.createExercise(action.exercise).pipe(
-  //         map(() => {
-  //           return WorkoutStateActions.exerciseSuccessfullyCreated();
-  //         }),
-  //         catchError(async (err) => WorkoutStateActions.exerciseCreatingFailed({ error: err }))
-  //       )
-  //     )
-  //   );
-  // });
 
   getExerciseList$ = createEffect(() => {
     return this.actions$.pipe(

@@ -22,7 +22,6 @@ export class BeforeWorkoutComponent implements OnInit {
   }
 
   startWorkout(){
-
     const executedWorkout: ExecutedWorkout = {
       date: Date.now().toString(),
       executedExercises: [], id: cuid(),

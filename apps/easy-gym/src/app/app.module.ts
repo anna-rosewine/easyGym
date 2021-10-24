@@ -13,24 +13,36 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { AuthenticationGuard } from '../../../../libs/auth/feature/src/lib/auth.guard';
+import { AuthFeatureModule } from '@pet/auth/feature';
 
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('@pet/global').then(m => m.GlobalModule)
+    loadChildren: () => import('@pet/global').then(m => m.GlobalModule),
+    canActivate: [AuthenticationGuard]
   },
   {
     path: 'profile',
-    loadChildren: () => import('@pet/global').then(m => m.GlobalModule)
+    loadChildren: () => import('@pet/global').then(m => m.GlobalModule),
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('@pet/auth/ui').then(m => m.AuthUiModule)
   },
   {
     path: 'process',
-    loadChildren: () => import('@pet/process-of-workout/ui').then(m => m.ProcessOfWorkoutUiModule)
+    loadChildren: () => import('@pet/process-of-workout/ui').then(m => m.ProcessOfWorkoutUiModule),
+    canActivate: [AuthenticationGuard]
+
   },
   {
     path: 'workout',
-    loadChildren: () => import('@pet/workouts/ui').then(m => m.WorkoutsUiModule)
+    loadChildren: () => import('@pet/workouts/ui').then(m => m.WorkoutsUiModule),
+    canActivate: [AuthenticationGuard]
+
   },
 ];
 
@@ -41,6 +53,7 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AuthFeatureModule,
     ReactiveFormsModule,
     NgMultiSelectDropDownModule.forRoot(),
     StoreModule.forRoot(
@@ -57,7 +70,7 @@ const routes: Routes = [
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreRouterConnectingModule.forRoot(),
     RouterModule.forRoot(routes)],
-  providers: [],
+  providers: [AuthenticationGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

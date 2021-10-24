@@ -1,5 +1,17 @@
+.bg {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  .mainContainer {
+    background-color: #ffffff;
+    border-radius: 32px 32px 0 0;
+    color: #000000;
+  }
+}
+
 .workoutItem {
   width: 50%;
+  margin-top: 30px;
+  margin-bottom: 30px;
   p {
     position: relative;
     font-weight: 600;
@@ -10,7 +22,7 @@
 
 .workoutName {
   padding: 16px 16px;
-  border: 1px solid #18181840;
+  border: 1px solid #ffffff;
   border-radius: 9px;
   margin: 18px 0;
 
@@ -20,7 +32,7 @@
   display: block;
   width:  150px;
   height: 25px;
-  border: 1px solid #1f1f1f;
+  border: 1px solid #ffffff;
   border-radius: 100%;
   position: absolute;
   top: -4px;
@@ -31,5 +43,4 @@
 
 .chosen:after{
   transform: rotate(-1deg);
-
 }

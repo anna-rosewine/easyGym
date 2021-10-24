@@ -1,5 +1,59 @@
 .bg {
   background-color: #1f1f1f;
   min-height: 100vh;
-  color: #c6c6c6;
+  color: #a4a4a4;
+}
+
+.row {
+  display: flex;
+  //margin: 100px auto;
+  justify-content: flex-start;
+  align-items: center;
+  .plan {
+    width: 170px;
+    border-right: 1px solid #c6c6c6;
+    display: flex;
+    padding-right: 10px;
+    flex-direction: column;
+    align-items: start;
+    .title {
+      //font-weight: 600;
+      margin: 8px 0;
+      color: #ffffff;
+      text-align: left;
+    }
+    .plan_numbers {
+      font-size: 14px;
+      text-align: left;
+      padding-bottom: 18px;
+    }
+  }
+}
+
+.emoji {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.table {
+  margin-top: 100px;
+}
+
+.results {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 14px;
+  .set{
+    margin: 4px;
+
+  }
+}
+
+.brightBtn{
+  margin-top: 50px;
+  position: fixed;
+  bottom: 20px;
+  width: 94%;
 }

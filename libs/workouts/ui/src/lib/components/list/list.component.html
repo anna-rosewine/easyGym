@@ -1,4 +1,4 @@
-<div class='mainContainer'>
+<div class='bg'>
   <div >
     <div (click)='toShow()' class='flex between'>
       <div class='workoutItem' >
@@ -9,6 +9,7 @@
         <p [ngClass]='{chosen: showExercise}'>Упражнения</p>
       </div>
     </div>
+    <div class='mainContainer'>
     <div *ngIf='workouts&&showWorkout' >
       <div *ngFor='let workout of workouts'>
         <div class='workoutName' >
@@ -41,7 +42,8 @@
           </div>
         </div>
       </div>
-  </div>
-  <pet-navigation [activeBar]='"list"'></pet-navigation>
-</div>
 
+  <pet-navigation [activeBar]='"list"'></pet-navigation>
+  </div>
+</div>
+</div>

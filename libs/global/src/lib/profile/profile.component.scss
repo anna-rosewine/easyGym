@@ -3,8 +3,9 @@
 }
 .profile {
   background-color: #1f1f1f;
-
 }
+
+
 
 .profile_darkTop {
   background-color: #1f1f1f;
@@ -64,6 +65,9 @@
       }
     }
   }
+}
+.flex {
+  align-items: center !important;
 }
 
 @media screen and (min-height: 800px) {

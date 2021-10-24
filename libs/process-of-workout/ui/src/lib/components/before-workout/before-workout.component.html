@@ -1,34 +1,37 @@
-<div class='preWorkout_top'>
-  <div class='flex'>
-    <svg style='margin-right: 8px' width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8.53499 0.514999L0.0499878 9L8.53499 17.485L9.94999 16.071L2.87799 9L9.94999 1.929L8.53499 0.514999Z" fill="#181818"/>
-    </svg>
-    <p (click)='back()'>Назад</p>
-  </div>
-  <p *ngIf='chosenWorkout' class='weightBlack preWorkout_title'>{{chosenWorkout.name}}</p>
-</div>
-
-<div class='mainContainer'>
-  <div class='  preWorkout exercises' *ngIf='chosenWorkout'>
-    <div *ngFor='let exercise of chosenWorkout.exercises' class='preWorkout_exercise'>
-      <p class='title'>{{exercise.title}}</p>
-      <div class='flex'>
-        <div class='column'>
-          <p class='additional'>Подходы</p>
-          <p class='additional'>{{exercise.planSets}}</p>
-        </div>
-        <div class='column'>
-          <p class='additional'>Повторы</p>
-          <p class='additional'>{{exercise.planReps}}</p>
-        </div>
-        <div *ngIf='exercise.planWeight' class='column'>
-          <p  class='additional'>Вес</p>
-          <p class='additional'>{{exercise.planWeight}} кг</p>
-        </div>
-
-      </div>
+<div class='bg'>
+  <div class='preWorkout_top'>
+    <div class='flex'>
+      <svg style='margin-right: 8px' width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.53499 0.514999L0.0499878 9L8.53499 17.485L9.94999 16.071L2.87799 9L9.94999 1.929L8.53499 0.514999Z" fill="#181818"/>
+      </svg>
+      <p (click)='back()'>Назад</p>
     </div>
-
+    <p *ngIf='chosenWorkout' class='weightBlack preWorkout_title'>{{chosenWorkout.name}}</p>
   </div>
-  <button (click)='startWorkout()' class='btn100'>Начать тренировку</button>
+
+  <div class='mainContainer'>
+    <div class='  preWorkout exercises' *ngIf='chosenWorkout'>
+      <div *ngFor='let exercise of chosenWorkout.exercises' class='preWorkout_exercise'>
+        <p class='title'>{{exercise.title}}</p>
+        <div class='flex'>
+          <div class='column'>
+            <p class='additional'>Подходы</p>
+            <p class='additional'>{{exercise.planSets}}</p>
+          </div>
+          <div class='column'>
+            <p class='additional'>Повторы</p>
+            <p class='additional'>{{exercise.planReps}}</p>
+          </div>
+          <div *ngIf='exercise.planWeight' class='column'>
+            <p  class='additional'>Вес</p>
+            <p class='additional'>{{exercise.planWeight}} кг</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <button (click)='startWorkout()' class='btn100'>Начать тренировку</button>
+  </div>
 </div>
+

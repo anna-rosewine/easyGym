@@ -37,7 +37,7 @@ export interface Exercise {
 export interface ExecutedExercise {
   id: string,
   planExerciseID: string,
-  title?: string,
+  title: string,
   note?: string,
   planReps: number,
   planSets: number,
@@ -50,6 +50,7 @@ export interface Set {
   id?: string,
   repetitions?: number,
   weight?: number,
+  isDone: boolean
   withoutChanges: boolean
 }
 
