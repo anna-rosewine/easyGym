@@ -22,6 +22,13 @@ export class ProfileComponent implements OnInit {
 
   logout(){
     this.authFacade.logout();
+    this.authFacade.logoutWasSuccessful$.subscribe((data) => {
+      if(data){
+        if(data===true){
+          this.router.navigate(['/auth/login'])
+        }
+      }
+    })
   }
 
 
@@ -33,13 +40,18 @@ export class ProfileComponent implements OnInit {
         this.name = split[0];
       }
     })
-    this.authFacade.logout$.subscribe((data) => {
-      if(data){
-        if(data===true){
-          this.router.navigate(['/auth/login'])
+
+      this.authFacade.user$.subscribe((data) => {
+        if(!data) {
+
+          // if (user.email) {
+          //   const authUser: User = {
+          //     email: user.email, uid: user.uid
+          //   }
+          //   this.authFacade.setUser(authUser)
+          // }
         }
-      }
-    })
+      })
     this.workoutFacade.exerciseList$.subscribe((data) => {
       if(data){
         // console.log(data)

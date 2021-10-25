@@ -29,9 +29,9 @@ export const getSelectedId = createSelector(
   (state: State) => state.selectedId
 );
 
-export const logout = createSelector(
+export const logoutWasSuccessful = createSelector(
   getAuthState,
-  (state: State) => state.logout
+  (state: State) => state.logoutWasSuccessful
 );
 
 export const user = createSelector(

@@ -108,7 +108,6 @@ export class WorkoutStateEffects {
       mergeMap((action) =>
         this.workoutService.updateExecutedWorkout(action.key, action.executedWorkout).pipe(
           map((w) => {
-            console.log('up')
             return WorkoutStateActions.executedWorkoutSuccessfullyUpdated();
           }),
           catchError(async (err) => WorkoutStateActions.executedWorkoutUpdatingFailed({ error: err }))

@@ -11,7 +11,7 @@ export interface State extends EntityState<AuthEntity> {
   selectedId?: string | number; // which Auth record has been selected
   loaded: boolean; // has the Auth list been loaded
   error?: string | null; // last known error (if any)
-  logout?: boolean | undefined
+  logoutWasSuccessful?: boolean | undefined
   user?: User | undefined
   loginSuccess?: boolean | undefined
 }
@@ -32,9 +32,10 @@ const authReducer = createReducer(
   initialState,
   on(AuthActions.init, (state) => ({ ...state, loaded: false, error: null })),
   on(AuthActions.setUser, (state, {user}) => ({ ...state, user: user })),
-  on(AuthActions.signOutSuccess, (state) => ({ ...state, logout: true })),
+  on(AuthActions.signOutSuccess, (state) => ({ ...state, logoutWasSuccessful: true })),
   on(AuthActions.clearLogout, (state) => ({ ...state, logout: undefined})),
   on(AuthActions.loginSuccess, (state, {user}) => ({ ...state, user: user, loginSuccess: true})),
+  on(AuthActions.signOutSuccess, (state) => ({ ...state, user: undefined,})),
   on(AuthActions.loadAuthSuccess, (state, { auth }) =>
     authAdapter.setAll(auth, { ...state, loaded: true })
   ),

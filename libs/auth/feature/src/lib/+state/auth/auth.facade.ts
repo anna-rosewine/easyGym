@@ -13,7 +13,7 @@ export class AuthFacade {
    * and expose them as observables through the facade.
    */
   loaded$ = this.store.pipe(select(AuthSelectors.getAuthLoaded));
-  logout$ = this.store.pipe(select(AuthSelectors.logout));
+  logoutWasSuccessful$ = this.store.pipe(select(AuthSelectors.logoutWasSuccessful));
   user$ = this.store.pipe(select(AuthSelectors.user));
   allAuth$ = this.store.pipe(select(AuthSelectors.getAllAuth));
   selectedAuth$ = this.store.pipe(select(AuthSelectors.getSelected));

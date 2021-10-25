@@ -34,7 +34,11 @@ export class LoginComponent implements OnInit {
     setTimeout(()=>{
       this.router.navigate([`/profile`]).then()
     }, 500)
-
+    this.authFacade.user$.subscribe((data) => {
+      if(data){
+        this.router.navigate([`/profile`]).then()
+      }
+    })
     // this.authService.checkUserForGuard().pipe(
     //   map((user) => {
     //     if(user !== null) {
@@ -51,11 +55,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authFacade.user$.subscribe((data) => {
-      if(data){
-        this.router.navigate([`/profile`]).then()
-      }
-    })
+    // this.authFacade.user$.subscribe((data) => {
+    //   if(data){
+    //     this.router.navigate([`/profile`]).then()
+    //   }
+    // })
     // this.authFacade.loginWasSuccessful.subscribe((data) => {
     //   if(data){
     //     if(data===true){

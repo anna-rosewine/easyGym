@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AuthenticationGuard } from '../../../../libs/auth/feature/src/lib/auth.guard';
 import { AuthFeatureModule } from '@pet/auth/feature';
+import { DesctopComponent } from './desctop/desctop.component';
 
 
 const routes: Routes = [
@@ -47,7 +48,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent,
+  declarations: [AppComponent, DesctopComponent,
    ],
   imports: [BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
