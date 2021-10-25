@@ -2,7 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, of } from 'rxjs';
+import { from, Observable, ObservedValueOf, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from './auth.interfaces';
 
@@ -14,7 +14,8 @@ export class AuthService {
   constructor(   public afs: AngularFirestore,   // Inject Firestore service
                  public afAuth: AngularFireAuth, // Inject Firebase auth service
                  public router: Router,
-                 public ngZone: NgZone ) {
+                 public ngZone: NgZone,
+             ) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
@@ -26,11 +27,16 @@ export class AuthService {
 
   }
 
-  login(email: string, password: string):Observable<Promise<firebase.auth.UserCredential>> {
+  login(email: string, password: string){
     // this.afAuth.signInWithEmailAndPassword(email, password)
     //   .then((result) => {
     //     this.ngZone.run(() => {
-    //       this.router.navigate(['dashboard']);
+    //       if(result.user && result.user.email){
+    //         const authUser: User = {
+    //           email: result.user.email, uid: result.user.uid
+    //         }
+    //         this.authFacade.setUser(authUser)
+    //       }
     //     });
     //     console.log(result)
     //     // this.SetUserData(result.user);
@@ -38,7 +44,7 @@ export class AuthService {
     //     window.alert(error.message)
     //   })
 
-    return of(
+    return from(
       this.afAuth.signInWithEmailAndPassword(email, password)
     )
   }

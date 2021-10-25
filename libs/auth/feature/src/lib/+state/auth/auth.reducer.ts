@@ -34,7 +34,7 @@ const authReducer = createReducer(
   on(AuthActions.setUser, (state, {user}) => ({ ...state, user: user })),
   on(AuthActions.signOutSuccess, (state) => ({ ...state, logout: true })),
   on(AuthActions.clearLogout, (state) => ({ ...state, logout: undefined})),
-  on(AuthActions.loginSuccess, (state) => ({ ...state, loginSuccess: true})),
+  on(AuthActions.loginSuccess, (state, {user}) => ({ ...state, user: user, loginSuccess: true})),
   on(AuthActions.loadAuthSuccess, (state, { auth }) =>
     authAdapter.setAll(auth, { ...state, loaded: true })
   ),

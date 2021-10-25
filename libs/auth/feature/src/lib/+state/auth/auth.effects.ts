@@ -35,21 +35,16 @@ export class AuthEffects {
       mergeMap((action) =>
         this.authService.login(action.authInfo.mail, action.authInfo.password).pipe(
           map((doc) => {
-            console.log(doc)
-            // doc.then(({ user }) => {
-            //   if(user!==null){
-            //     if(user.email){
-            //       const authUser: User = {
-            //         email: user.email, uid: user.uid
-            //       }
-            //       return AuthActions.loginSuccess({user:authUser});
-            //     }
-            //     return false;
-            //   } else {
-            //     return false
-            //   }
-            // })
-            return AuthActions.loginSuccess();
+            console.log(doc.user)
+            if(doc.user && doc.user.email){
+              const authUser: User = {
+                email: doc.user.email, uid: doc.user.uid
+              }
+              return AuthActions.loginSuccess({user: authUser});
+
+              // return AuthActions.setUser({user: authUser})
+            }
+            return AuthActions.loginFailed({ err: new Error() })
           }),
           catchError(async (err) => AuthActions.loginFailed({ err: err }))
         )

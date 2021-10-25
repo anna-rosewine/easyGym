@@ -23,7 +23,7 @@ export const login = createAction(
 
 export const loginSuccess = createAction(
   '[Auth/API] Login Success',
-  // props<{ user:  User }>()
+  props<{ user:  User }>()
 
 );
 

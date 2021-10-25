@@ -40,12 +40,12 @@ export class AuthenticationGuard implements CanActivate {
       map((user) => {
         if(user !== null){
           console.log(user)
-          if(user.email){
-            const authUser: User = {
-              email: user.email, uid: user.uid
-            }
-            this.authFacade.setUser(authUser)
-          }
+          // if(user.email){
+          //   const authUser: User = {
+          //     email: user.email, uid: user.uid
+          //   }
+          //   this.authFacade.setUser(authUser)
+          // }
           return true;
         } else {
           this.router.navigate(['/auth/login'])

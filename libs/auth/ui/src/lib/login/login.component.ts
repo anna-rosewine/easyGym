@@ -32,30 +32,39 @@ export class LoginComponent implements OnInit {
     this.authFacade.login(authInfo)
     this.password = ''
     this.email = ''
+    setTimeout(()=>{
+      this.router.navigate([`/profile`]).then()
+    }, 500)
+
+    // this.authService.checkUserForGuard().pipe(
+    //   map((user) => {
+    //     if(user !== null) {
+    //       console.log(user, 'go to profile')
+    //       this.router.navigate([`/profile`])
+    //     }
+    //   }),
+    //   catchError(async (err) => {
+    //     const locationFromWin = window.location.pathname;
+    //     console.log(err)
+    //     // this.router.navigate(['/auth/login'])
+    //   })
+    // );
+  }
+
+  ngOnInit(): void {
+    this.authFacade.user$.subscribe((data) => {
+      if(data){
+        this.router.navigate([`/profile`]).then()
+      }
+    })
     // this.authFacade.loginWasSuccessful.subscribe((data) => {
     //   if(data){
     //     if(data===true){
     //       console.log('go to profile')
+    //       this.router.navigate([`/profile`])
     //     }
     //   }
     // })
-    this.authService.checkUserForGuard().pipe(
-      map((user) => {
-        if(user !== null) {
-          console.log(user, 'go to profile')
-          this.router.navigate([`/profile`])
-        }
-      }),
-      catchError(async (err) => {
-        const locationFromWin = window.location.pathname;
-        console.log(err)
-        // this.router.navigate(['/auth/login'])
-      })
-    );
-  }
-
-  ngOnInit(): void {
-
   }
 
 }
