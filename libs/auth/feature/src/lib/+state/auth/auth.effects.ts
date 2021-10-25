@@ -35,7 +35,6 @@ export class AuthEffects {
       mergeMap((action) =>
         this.authService.login(action.authInfo.mail, action.authInfo.password).pipe(
           map((doc) => {
-            console.log(doc.user)
             if(doc.user && doc.user.email){
               const authUser: User = {
                 email: doc.user.email, uid: doc.user.uid
@@ -58,7 +57,6 @@ export class AuthEffects {
       mergeMap((action) =>
         this.authService.emailSignup(action.authInfo.mail, action.authInfo.password).pipe(
           map((doc) => {
-            console.log(doc)
             return AuthActions.signUpSuccess();
           }),
           catchError(async (err) => AuthActions.signUpFailed({ err: err }))
@@ -73,7 +71,6 @@ export class AuthEffects {
       mergeMap((action) =>
         this.authService.logout().pipe(
           map((doc) => {
-            console.log(doc)
             return AuthActions.signOutSuccess();
           }),
           catchError(async (err) => AuthActions.signOutFailed({ err: err }))

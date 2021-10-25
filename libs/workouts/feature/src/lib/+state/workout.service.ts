@@ -76,7 +76,7 @@ export class WorkoutService {
     this.afs
       .collection("workout")
       .add(newWorkoutToService)
-      .then(res => {console.log('yep')}, err => console.log(err));
+      .then(res => {}, err => console.log(err));
     return  fromPromise(this.realTimeDbWorkouts.push(newWorkoutToService).get().then())
   }
 

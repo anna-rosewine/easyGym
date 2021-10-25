@@ -13,12 +13,10 @@ export class ProfileComponent implements OnInit {
 
   constructor(private router: Router, private workoutFacade: WorkoutStateFacade, private authFacade: AuthFacade) { }
   createExercise(){
-    console.log('create exercise')
     this.router.navigate(['workout/createExercise'])
   }
 
   createWorkout(){
-    console.log('create exercise')
     this.router.navigate(['workout/createWorkout'])
   }
 

@@ -1,6 +1,8 @@
 <div class='bg'>
   <div class='mainContainer'>
     <div class='table' *ngIf='executedWorkout'>
+      <p class='workout_title'>Ты сделал это!</p>
+      <p class='workout_title'>{{executedWorkout.name}}</p>
 <!--      <div *ngFor='let exercise of executedWorkout.executedExercises' class='row'>-->
 <!--        <div class='plan'>-->
 <!--          <p class='title'>{{exercise.title}}</p>-->
@@ -9,14 +11,11 @@
 <!--        <div  class='results'>-->
 <!--          <div class='set' *ngFor='let realSet of exercise.realSets'>-->
 <!--            <div *ngIf='((realSet.repetitions===exercise.planReps) && (realSet.weight===exercise.planWeight) &&(realSet.isDone));else other_content'>-->
-
 <!--              <img class='emoji' src="https://img.icons8.com/emoji/48/000000/flexed-biceps.png"/>-->
-
 <!--            </div>-->
 <!--            &lt;!&ndash;          <div *ngIf='((realSet.repetitions!==exercise.planReps) || (realSet.weight!==exercise.planWeight))'>&ndash;&gt;-->
 <!--            <ng-template #other_content>          {{realSet.repetitions}} x {{realSet.weight}}кг</ng-template>-->
 <!--            &lt;!&ndash;          </div>&ndash;&gt;-->
-
 <!--          </div>-->
 <!--        </div>-->
 <!--      </div>-->
@@ -32,9 +31,7 @@
             <div  class='results'>
               <div class='set' *ngFor='let realSet of exercise.realSets'>
                 <div *ngIf='((realSet.repetitions===exercise.planReps) && (realSet.weight===exercise.planWeight) &&(realSet.isDone));else other_content'>
-
                   <img class='emoji' src="https://img.icons8.com/emoji/48/000000/flexed-biceps.png"/>
-
                 </div>
                 <!--          <div *ngIf='((realSet.repetitions!==exercise.planReps) || (realSet.weight!==exercise.planWeight))'>-->
                 <ng-template #other_content>
@@ -42,17 +39,15 @@
                     {{realSet.repetitions}} x {{realSet.weight}}кг
                   </p>
               </ng-template>
-                <!--          </div>-->
-
               </div>
             </div>
           </td>
         </tr>
       </table>
-
+      <p style='font-size: 12px;'>{{executedWorkout.date | date: 'dd/MM/yyyy'}}</p>
     </div>
-
+<!--    <ng-particles [id]="id" [options]="particlesOptions" (particlesLoaded)="particlesLoaded($event)" (particlesInit)="particlesInit($event)"></ng-particles>-->
+<!--    <ng-particles [id]="id" [url]="particlesUrl" (particlesLoaded)="particlesLoaded($event)" (particlesInit)="particlesInit($event)"></ng-particles>-->
     <button (click)='home()' class='btn100 brightBtn'>Вернутьсяв профиль</button>
   </div>
-
 </div>

@@ -22,13 +22,17 @@ export class BeforeWorkoutComponent implements OnInit {
   }
 
   startWorkout(){
-    const executedWorkout: ExecutedWorkout = {
-      date: Date.now().toString(),
-      executedExercises: [], id: cuid(),
-      planWorkoutId: '',
+    if(this.chosenWorkout){
+      const executedWorkout: ExecutedWorkout = {
+        date: Date.now().toString(),
+        executedExercises: [], id: cuid(),
+        planWorkoutId: this.chosenWorkout.id,
+        name: this.chosenWorkout.name
+      }
+      this.workoutFacade.createExecutedWorkout(executedWorkout)
+      // this.workoutFacade.updateExecutedWorkout(work)
     }
-    this.workoutFacade.createExecutedWorkout(executedWorkout)
-    // this.workoutFacade.updateExecutedWorkout(work)
+
   }
 
   ngOnInit(): void {

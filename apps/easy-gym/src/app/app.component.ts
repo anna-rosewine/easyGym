@@ -13,18 +13,5 @@ export class AppComponent {
 
   constructor(private router: Router){
     this.router.navigate(['/profile'])
-    //private store: AngularFirestore, private db: AngularFireDatabase
-    // this.todo = this.store.collection('todo').valueChanges({ idField: 'id' }) as Observable<{id: string}[]>;
   }
-
-  //Example of setting database information
-  // saveData(text: string){
-  //   const ref = this.db.list("exercise");
-  //
-  //   ref.push(text).then((data) => {
-  //     console.log(data);
-  //   }).catch((err) => {
-  //     console.error(err)
-  //   })
-  // }
 }

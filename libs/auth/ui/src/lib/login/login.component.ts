@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
       mail: this.email,
       password: this.password
     }
-    console.log(authInfo)
     this.authFacade.clearLogout()
     // this.authFacade.signUp(authInfo)
     this.authFacade.login(authInfo)

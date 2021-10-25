@@ -43,7 +43,6 @@ export class ExercisePageComponent implements OnInit {
   }
 
   nextExercise() :void{
-    console.log('next')
     // if(this.executedWorkout&&this.executedExercise){
     //   this.executedExercise.realSets = this.setArr
     //   const newExs: ExecutedExercise[] = Object.assign([],this.executedWorkout.executedExercises)
@@ -75,7 +74,6 @@ export class ExercisePageComponent implements OnInit {
         executedExercises:   newExs
       }
       // this.executedWorkout.executedExercises.push(this.executedExercise)
-      console.log(this.executedWorkout)
       this.workoutFacade.updateExecutedWorkout(this.workoutKey, this.executedWorkout)
     }
 
@@ -161,7 +159,6 @@ export class ExercisePageComponent implements OnInit {
     if(this.chosenPlannedExercise&&this.chosenPlannedExercise.order&&this.chosenWorkout) {
       if(this.chosenWorkout.exercises[this.chosenPlannedExercise.order]){
         this.nextExerciseId = this.chosenWorkout.exercises[this.chosenPlannedExercise.order].id
-        console.log(this.nextExerciseId)
       if(this.nextExerciseId){
         this.router.navigate([`/process/${this.workoutKey}/${this.workoutId}/${this.nextExerciseId}`]).then()
       }} else {
@@ -189,11 +186,7 @@ export class ExercisePageComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log('ngonInit')
-
-
     this.downloadNeededData()
-
     this.workoutFacade.selectWorkout$(this.workoutId).subscribe((data) => {
       if(data){
         this.chosenWorkout=data

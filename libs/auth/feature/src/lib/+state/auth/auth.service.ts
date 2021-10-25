@@ -19,9 +19,7 @@ export class AuthService {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
-        console.log(user)
       } else {
-        console.log(user, 0)
       }
     })
 
@@ -75,11 +73,10 @@ export class AuthService {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.oAuthLogin(provider)
       .then(value => {
-        console.log('Sucess', value),
           this.router.navigateByUrl('/profile');
       })
       .catch(error => {
-        console.log('Something went wrong: ', error);
+        error = 0;
       });
   }
 

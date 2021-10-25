@@ -9,10 +9,12 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { WorkoutsFeatureModule } from '@pet/workouts/feature';
 import { FormsModule } from '@angular/forms';
 import { SharedFunctionsModule } from '../../../../shared/functions/src';
+import { NgParticlesModule } from 'ng-particles';
 
 
 @NgModule({
   imports: [CommonModule,
+    NgParticlesModule,
     StoreRouterConnectingModule.forRoot({}),
     WorkoutsFeatureModule,
     SharedFunctionsModule,
