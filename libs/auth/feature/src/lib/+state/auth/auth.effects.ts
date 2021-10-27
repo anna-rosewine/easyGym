@@ -40,12 +40,12 @@ export class AuthEffects {
                 email: doc.user.email, uid: doc.user.uid
               }
               return AuthActions.loginSuccess({user: authUser});
-
               // return AuthActions.setUser({user: authUser})
             }
             return AuthActions.loginFailed({ err: new Error() })
           }),
-          catchError(async (err) => AuthActions.loginFailed({ err: err }))
+          catchError(async (err) => {
+            return AuthActions.loginFailed({ err: err })})
         )
       )
     );

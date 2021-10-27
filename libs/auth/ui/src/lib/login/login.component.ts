@@ -13,6 +13,7 @@ import { catchError, map } from 'rxjs/operators';
 export class LoginComponent implements OnInit {
   email: string ;
   password: string ;
+ authError: string | undefined;
   constructor(private authFacade: AuthFacade, private router: Router,  private authService: AuthService) {
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
@@ -23,6 +24,14 @@ export class LoginComponent implements OnInit {
 
   authWithGoogle(){
     this.authFacade.authWithGoogle()
+    // setTimeout(()=>{
+    //   this.router.navigate([`/profile`]).then()
+    // }, 3000)
+    this.authFacade.user$.subscribe((data) => {
+      if(data){
+        this.router.navigate([`/profile`]).then()
+      }
+    })
   }
 
   login(){
@@ -35,9 +44,9 @@ export class LoginComponent implements OnInit {
     this.authFacade.login(authInfo)
     this.password = ''
     this.email = ''
-    setTimeout(()=>{
-      this.router.navigate([`/profile`]).then()
-    }, 500)
+    // setTimeout(()=>{
+    //   this.router.navigate([`/profile`]).then()
+    // }, 500)
     this.authFacade.user$.subscribe((data) => {
       if(data){
         this.router.navigate([`/profile`]).then()
@@ -47,7 +56,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.authFacade.authError.subscribe((data) => {
+      if(data){
+        this.authError = data
+      }
+    })
   }
 
 }

@@ -14,6 +14,8 @@ export interface State extends EntityState<AuthEntity> {
   logoutWasSuccessful?: boolean | undefined
   user?: User | undefined
   loginSuccess?: boolean | undefined
+  signUpWasSuccessful?: boolean | undefined
+  authError?: string | undefined
 }
 
 export interface AuthPartialState {
@@ -32,10 +34,12 @@ const authReducer = createReducer(
   initialState,
   on(AuthActions.init, (state) => ({ ...state, loaded: false, error: null })),
   on(AuthActions.setUser, (state, {user}) => ({ ...state, user: user })),
+  on(AuthActions.signUpSuccess, (state) => ({ ...state, signUpWasSuccessful: true })),
   on(AuthActions.signOutSuccess, (state) => ({ ...state, logoutWasSuccessful: true })),
   on(AuthActions.clearLogout, (state) => ({ ...state, logout: undefined})),
   on(AuthActions.loginSuccess, (state, {user}) => ({ ...state, user: user, loginSuccess: true})),
-  on(AuthActions.signOutSuccess, (state) => ({ ...state, user: undefined,})),
+  on(AuthActions.loginFailed, (state, {err}) => ({ ...state, authError: err.message })),
+  on(AuthActions.signOutSuccess, (state) => ({ ...state, user: undefined, loginSuccess: false, signUpWasSuccessful: false})),
   on(AuthActions.loadAuthSuccess, (state, { auth }) =>
     authAdapter.setAll(auth, { ...state, loaded: true })
   ),

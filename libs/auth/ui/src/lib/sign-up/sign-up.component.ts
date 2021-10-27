@@ -10,9 +10,11 @@ import { AuthInfo } from '../../../../feature/src/lib/+state/auth/auth.interface
 export class SignUpComponent implements OnInit {
   email: string ;
   password: string ;
+  message: boolean | undefined;
   constructor(private authFacade: AuthFacade) {
     this.email = '';
     this.password = '';
+
   }
 
   signUp(){
@@ -21,12 +23,22 @@ export class SignUpComponent implements OnInit {
       password: this.password
     }
     this.authFacade.signUp(authInfo)
+
     // this.authFacade.login(authInfo)
     this.password = ''
     this.email = ''
   }
 
+  authWithGoogle(){
+    this.authFacade.authWithGoogle()
+  }
+
   ngOnInit(): void {
+    this.authFacade.signUpWasSuccessful.subscribe((data) => {
+      if(data === true){
+        this.message = true
+      }
+    })
   }
 
 }

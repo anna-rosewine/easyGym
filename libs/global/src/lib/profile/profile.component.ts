@@ -36,7 +36,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.authFacade.user$.subscribe((data) => {
       if(data){
-        if(data.displayName){
+        if(data.displayName && (data.displayName.length>1)){
           this.name = data.displayName
         } else {
           const split  = data.email.split('@');

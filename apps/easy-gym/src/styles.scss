@@ -266,6 +266,11 @@ button {
 }
 
 .login {
+  .error {
+    font-size: 10px;
+    color: #ffffff;
+    text-align: center;
+  }
   .greeting {
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
@@ -274,7 +279,6 @@ button {
       width: 75%;
       margin: 20px auto 20px;
     }
-
     p {
       font-size: 14px;
       text-align: center;
@@ -306,8 +310,10 @@ button {
     border: 1px solid #ffffff;
     display: flex;
     align-items: center;
+    justify-content: space-around;
     width: 320px;
-    margin: 30px auto;
+    margin: 15px auto;
+    height: 47px;
     p{
       font-weight: 600;
       margin-right: 10px;

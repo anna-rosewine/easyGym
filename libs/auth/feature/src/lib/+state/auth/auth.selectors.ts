@@ -44,6 +44,16 @@ export const loginWasSuccessful = createSelector(
   (state: State) => state.loginSuccess
 );
 
+export const authError = createSelector(
+  getAuthState,
+  (state: State) => state.authError
+);
+
+export const signUpWasSuccessful = createSelector(
+  getAuthState,
+  (state: State) => state.signUpWasSuccessful
+);
+
 
 export const getSelected = createSelector(
   getAuthEntities,

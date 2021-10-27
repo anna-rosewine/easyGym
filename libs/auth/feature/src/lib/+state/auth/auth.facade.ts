@@ -18,6 +18,10 @@ export class AuthFacade {
   allAuth$ = this.store.pipe(select(AuthSelectors.getAllAuth));
   selectedAuth$ = this.store.pipe(select(AuthSelectors.getSelected));
   loginWasSuccessful = this.store.pipe(select(AuthSelectors.loginWasSuccessful));
+  signUpWasSuccessful = this.store.pipe(select(AuthSelectors.signUpWasSuccessful));
+  authError = this.store.pipe(select(AuthSelectors.authError));
+
+
   constructor(private readonly store: Store) {}
 
   /**
