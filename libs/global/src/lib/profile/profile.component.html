@@ -2,8 +2,8 @@
   <div class='profile'>
     <div style='background-color: #1f1f1f' class='profile_darkTop'>
       <div class='header flex between'>
-        <p class='weightBlack'>
-          Привет, <br/> <span *ngIf='name'>{{name}}</span>
+        <p>
+          Привет, <br/> <span class='weightBlack' *ngIf='name'>{{name}}</span>
         </p>
         <img (click)='logout()' src="https://img.icons8.com/small/32/ffffff/logout-rounded.png"/>
       </div>

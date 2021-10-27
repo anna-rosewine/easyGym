@@ -75,3 +75,18 @@ export const setUser = createAction(
 );
 
 
+export const authWithGoogle = createAction(
+  '[Auth/API] Auth With Google',
+);
+
+export const authWithGoogleSucceed = createAction(
+  '[Auth/API] Auth With Google Succeed',
+);
+
+export const authWithGoogleFailed = createAction(
+  '[Auth/API] Auth With Google Failed',
+  props<{ err: Error }>()
+);
+
+
+

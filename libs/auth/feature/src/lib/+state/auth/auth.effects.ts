@@ -51,6 +51,26 @@ export class AuthEffects {
     );
   });
 
+  authWithGoogle$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.authWithGoogle),
+      mergeMap((action) =>
+        this.authService.GoogleAuth().pipe(
+          map((doc) => {
+            if(doc.user && doc.user.email && doc.user.displayName){
+              const authUser: User = {
+                email: doc.user.email, uid: doc.user.uid, displayName: doc.user.displayName
+              }
+              return AuthActions.loginSuccess({user: authUser});
+            }
+            return AuthActions.loginFailed({ err: new Error() })
+          }),
+          catchError(async (err) => AuthActions.authWithGoogleFailed({ err: err }))
+        )
+      )
+    );
+  });
+
   signUp$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.signUp),

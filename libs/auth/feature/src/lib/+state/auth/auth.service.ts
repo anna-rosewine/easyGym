@@ -5,6 +5,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { from, Observable, ObservedValueOf, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { User } from './auth.interfaces';
+import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
 @Injectable({
   providedIn: 'root',
@@ -26,25 +27,17 @@ export class AuthService {
   }
 
   login(email: string, password: string){
-    // this.afAuth.signInWithEmailAndPassword(email, password)
-    //   .then((result) => {
-    //     this.ngZone.run(() => {
-    //       if(result.user && result.user.email){
-    //         const authUser: User = {
-    //           email: result.user.email, uid: result.user.uid
-    //         }
-    //         this.authFacade.setUser(authUser)
-    //       }
-    //     });
-    //     console.log(result)
-    //     // this.SetUserData(result.user);
-    //   }).catch((error) => {
-    //     window.alert(error.message)
-    //   })
-
     return from(
       this.afAuth.signInWithEmailAndPassword(email, password)
     )
+  }
+
+  GoogleAuth() {
+    return this.AuthLogin(new GoogleAuthProvider());
+  }
+
+  AuthLogin(provider: any) {
+    return from(this.afAuth.signInWithPopup(provider))
   }
 
   checkUser(){
@@ -56,14 +49,6 @@ export class AuthService {
   }
 
   emailSignup(email: string, password: string) {
-    // this.afAuth.createUserWithEmailAndPassword(email, password)
-    //   .then(value => {
-    //     console.log('Sucess', value);
-    //     this.router.navigateByUrl('/profile');
-    //   })
-    //   .catch(error => {
-    //     console.log('Something went wrong: ', error);
-    //   });
     return of(
       this.afAuth.createUserWithEmailAndPassword(email, password)
     )

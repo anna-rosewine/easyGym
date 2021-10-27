@@ -47,4 +47,8 @@ export class AuthFacade {
   clearLogout(){
     this.store.dispatch(AuthActions.clearLogout())
   }
+
+  authWithGoogle(){
+    this.store.dispatch(AuthActions.authWithGoogle())
+  }
 }

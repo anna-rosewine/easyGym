@@ -42,10 +42,11 @@ export class AuthenticationGuard implements CanActivate {
           // console.log(user)
             this.authFacade.user$.subscribe((data) => {
               if(!data) {
-                if (user.email) {
+                if (user.email && user.displayName) {
                   const authUser: User = {
-                    email: user.email, uid: user.uid
+                    email: user.email, uid: user.uid, displayName: user.displayName
                   }
+
                   this.authFacade.setUser(authUser)
                 }
               }

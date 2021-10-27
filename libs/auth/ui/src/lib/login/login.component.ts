@@ -21,6 +21,10 @@ export class LoginComponent implements OnInit {
     this.password = '';
   }
 
+  authWithGoogle(){
+    this.authFacade.authWithGoogle()
+  }
+
   login(){
     const authInfo: AuthInfo = {
       mail: this.email,
@@ -39,35 +43,11 @@ export class LoginComponent implements OnInit {
         this.router.navigate([`/profile`]).then()
       }
     })
-    // this.authService.checkUserForGuard().pipe(
-    //   map((user) => {
-    //     if(user !== null) {
-    //       console.log(user, 'go to profile')
-    //       this.router.navigate([`/profile`])
-    //     }
-    //   }),
-    //   catchError(async (err) => {
-    //     const locationFromWin = window.location.pathname;
-    //     console.log(err)
-    //     // this.router.navigate(['/auth/login'])
-    //   })
-    // );
+
   }
 
   ngOnInit(): void {
-    // this.authFacade.user$.subscribe((data) => {
-    //   if(data){
-    //     this.router.navigate([`/profile`]).then()
-    //   }
-    // })
-    // this.authFacade.loginWasSuccessful.subscribe((data) => {
-    //   if(data){
-    //     if(data===true){
-    //       console.log('go to profile')
-    //       this.router.navigate([`/profile`])
-    //     }
-    //   }
-    // })
+
   }
 
 }
