@@ -24,7 +24,8 @@
   padding: 16px 16px;
   border: 1px solid #ffffff;
   border-radius: 9px;
-  margin: 18px 0;
+  //padding-left: 12px;
+  //margin: 18px 0;
 
 }
 .chosen:before, .chosen:after {
@@ -43,4 +44,12 @@
 
 .chosen:after{
   transform: rotate(-1deg);
+}
+
+.list {
+  .preWorkout {
+    width: 100%;
+    border-bottom: 1px solid #dedede;
+    min-height: 40px;
+  }
 }

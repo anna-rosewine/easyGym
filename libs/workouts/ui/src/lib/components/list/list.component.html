@@ -9,11 +9,36 @@
         <p [ngClass]='{chosen: showExercise}'>Упражнения</p>
       </div>
     </div>
-    <div class='mainContainer'>
+    <div class='mainContainer list' >
     <div *ngIf='workouts&&showWorkout' >
-      <div *ngFor='let workout of workouts'>
-        <div class='workoutName' >
+      <div *ngFor='let workout of workouts' class='preWorkout'>
+        <div class='workoutName' (click)='showWorkoutDetails(workout.id)' >
           <p>{{workout.name}}</p>
+        </div>
+        <div *ngIf='(activeWorkoutId===workout.id)'>
+          <div class='workoutExercises preWorkout_exercise' *ngFor='let exercise of workout.exercises'>
+            <p class='title'>{{exercise.title}}</p>
+            <div class='flex' style='margin: 6px 0;'>
+              <div class='column'>
+                <p class='additional'>{{exercise.description}}</p>
+              </div>
+            </div >
+
+            <div class='flex'>
+              <div class='column'>
+                <p class='additional'>Подходы</p>
+                <p class='additional'>{{exercise.planSets}}</p>
+              </div>
+              <div class='column'>
+                <p class='additional'>Повторы</p>
+                <p class='additional'>{{exercise.planReps}}</p>
+              </div>
+              <div *ngIf='exercise.planWeight' class='column'>
+                <p  class='additional'>Вес</p>
+                <p class='additional'>{{exercise.planWeight}} кг</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

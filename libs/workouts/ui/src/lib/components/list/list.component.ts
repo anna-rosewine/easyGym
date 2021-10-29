@@ -9,6 +9,7 @@ import { Exercise, Workout } from '@pet/shared/functions';
 })
 export class ListComponent implements OnInit {
   show: string
+  activeWorkoutId: string | undefined;
   showExercise = true;
   showWorkout=false;
   exercises: Exercise[] | undefined;
@@ -21,6 +22,14 @@ export class ListComponent implements OnInit {
     this.showExercise = !this.showExercise
     this.showWorkout = !this.showWorkout
     this.show ==='exercise' ? this.show = "workout" :  this.show ="exercise"
+  }
+
+  showWorkoutDetails(exerciseId: string){
+    if(this.activeWorkoutId === exerciseId){
+      this.activeWorkoutId = undefined
+    } else {
+      this.activeWorkoutId = exerciseId
+    }
   }
 
   ngOnInit(): void {
