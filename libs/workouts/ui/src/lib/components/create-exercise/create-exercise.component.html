@@ -1,6 +1,10 @@
 <div class='mainContainer'>
-
-<p (click)='back()' class='back'>Назад</p>
+  <div class='flex'>
+    <svg (click)='back()'  style='margin-right: 8px; margin-bottom: 28px' width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8.53499 0.514999L0.0499878 9L8.53499 17.485L9.94999 16.071L2.87799 9L9.94999 1.929L8.53499 0.514999Z" fill="#181818"/>
+    </svg>
+    <p (click)='back()' class='back'>Назад</p>
+  </div>
 <form class='form' [formGroup]='exerciseForm'>
   <label for='title'>Название</label>
   <input required='required' type='text' id='title'  formControlName="title">

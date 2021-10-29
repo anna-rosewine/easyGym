@@ -6,6 +6,7 @@ import { Exercise, Workout } from '@pet/shared/functions';
 import { FormControl, FormGroup } from '@angular/forms';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ListItem } from 'ng-multiselect-dropdown/multiselect.model';
+import { AuthFacade } from '@pet/auth/feature';
 
 @Component({
   selector: 'pet-create-workout',
@@ -27,7 +28,8 @@ export class CreateWorkoutComponent implements OnInit {
   exerciseList: Exercise[] | undefined;
   dropdownList: Exercise[] = [];
   dropdownSettings: IDropdownSettings;
-  constructor(private router: Router, private workoutFacade: WorkoutStateFacade) {
+  userId: string | undefined;
+  constructor(private router: Router, private workoutFacade: WorkoutStateFacade, private authFacade: AuthFacade) {
     this.exerciseListForWorkout = []
     this.dropdownSettings = {
       singleSelection: false,
@@ -57,17 +59,20 @@ export class CreateWorkoutComponent implements OnInit {
   }
 
   createWorkout(){
-    const newWorkout: Omit<Workout, "id"> = {
-      exercises: this.exerciseListForWorkout,
-      name: this.workoutForm.value.title,
-      weekType:  this.workoutForm.value.weekType
+    if(this.userId) {
+      const newWorkout: Omit<Workout, "id"> = {
+        uid: this.userId,
+        exercises: this.exerciseListForWorkout,
+        name: this.workoutForm.value.title,
+        weekType: this.workoutForm.value.weekType
+      }
+      this.workoutFacade.createWorkout(newWorkout);
+      this.workoutForm.patchValue({
+        exercises: "",
+        title: "",
+        weekType: "",
+      })
     }
-    this.workoutFacade.createWorkout(newWorkout);
-    this.workoutForm.patchValue({
-      exercises: "",
-      title: "",
-      weekType: "",
-    })
   }
 
   ngOnInit(): void {
@@ -78,6 +83,12 @@ export class CreateWorkoutComponent implements OnInit {
         this.dropdownList=data
       }
     })
+    this.authFacade.user$.subscribe((data) => {
+      if(data){
+        this.userId = data.uid
+      }
+    })
+
     // this.workoutFacade
     //   .selectExercise$(this.exerciseList[0].id)
     //   .subscribe((data) => {

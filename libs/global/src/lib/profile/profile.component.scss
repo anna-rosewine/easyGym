@@ -14,9 +14,9 @@
 }
 
 .phrase {
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 600;
-  margin: 10px 0 10px;
+  margin: 18px 0 18px;
   color: #ffffff;
   .balance{
     display: inline-block;
@@ -26,24 +26,24 @@
   .balance:before{
     content: '';
     display: block;
-    width: 180px;
-    height: 40px;
+    width: 140px;
+    height: 30px;
     border: 1px solid #ECFF0D;
     border-radius: 100%;
     position: absolute;
-    left: -20px;
+    left: -10px;
     top: 5px;
     transform: rotate(5deg);
   }
   .balance:after{
     content: '';
     display: block;
-    width: 180px;
-    height: 40px;
+    width: 140px;
+    height: 30px;
     border: 1px solid #ECFF0D;
     border-radius: 100%;
     position: absolute;
-    left: -20px;
+    left: -10px;
     top: 5px;
     transform: rotate(-1deg);
   }

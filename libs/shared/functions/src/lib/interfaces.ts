@@ -5,6 +5,7 @@ export interface User {
 }
 
 export interface Workout {
+  uid: string,
   id: string,
   name: string,
   date?: string,
@@ -14,6 +15,7 @@ export interface Workout {
 
 export interface ExecutedWorkout {
   id: string,
+  uid: string,
   name?: string,
   planWorkoutId: string
   date: string,
@@ -22,6 +24,7 @@ export interface ExecutedWorkout {
 }
 
 export interface Exercise {
+  uid: string,
   id: string,
   title: string,
   key?: string

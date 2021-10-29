@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WorkoutStateFacade } from '@pet/workouts/feature';
 import { ExecutedWorkout, sortExercises, Workout } from '@pet/shared/functions';
 import * as cuid from 'cuid';
+import { AuthFacade } from '@pet/auth/feature';
 
 @Component({
   selector: 'pet-before-workout',
@@ -13,7 +14,8 @@ export class BeforeWorkoutComponent implements OnInit {
   chosenWorkout: Workout | undefined;
   workoutId: string;
   firstExerciseId: string | undefined
-  constructor(private router: Router, private workoutFacade: WorkoutStateFacade, private route: ActivatedRoute,) {
+  userId: string | undefined;
+  constructor(private router: Router, private workoutFacade: WorkoutStateFacade, private route: ActivatedRoute, private authFacade: AuthFacade) {
     this.workoutId = this.route.snapshot.params.workout_id;
   }
 
@@ -22,8 +24,9 @@ export class BeforeWorkoutComponent implements OnInit {
   }
 
   startWorkout(){
-    if(this.chosenWorkout){
+    if(this.chosenWorkout && this.userId){
       const executedWorkout: ExecutedWorkout = {
+        uid: this.userId,
         date: Date.now().toString(),
         executedExercises: [], id: cuid(),
         planWorkoutId: this.chosenWorkout.id,
@@ -37,6 +40,11 @@ export class BeforeWorkoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.workoutFacade.getWorkoutList()
+    this.authFacade.user$.subscribe((data) => {
+      if(data){
+        this.userId = data.uid
+      }
+    })
     this.workoutFacade.selectWorkout$(this.workoutId).subscribe((data) => {
       if(data){
         this.chosenWorkout=data

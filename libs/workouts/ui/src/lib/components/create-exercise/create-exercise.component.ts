@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
 import type { Exercise } from '@pet/shared/functions';
 import { Location } from '@angular/common';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { doc, getDoc } from "firebase/firestore";
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { WorkoutStateFacade } from '@pet/workouts/feature';
+import { AuthFacade } from '@pet/auth/feature';
 
 
 
@@ -27,8 +25,9 @@ export class CreateExerciseComponent implements OnInit {
     planWeight: new FormControl(''),
     weekType:  new FormControl(''),
   });
+  userId: string | undefined;
 
-  constructor(private workoutFacade: WorkoutStateFacade, private db: AngularFireDatabase, private afs: AngularFirestore,private location: Location, private router: Router) {
+  constructor(private workoutFacade: WorkoutStateFacade, private authFacade: AuthFacade, private location: Location, private router: Router) {
   }
 
   back(){
@@ -38,27 +37,33 @@ export class CreateExerciseComponent implements OnInit {
 
   createExercise(){
     console.log(this.exerciseForm.value.weekType)
-    const newExercise: Omit<Exercise, "id"> = {
-      planSets: this.exerciseForm.value.planSets,
-      description: this.exerciseForm.value.description,
-      title: this.exerciseForm.value.title,
-      planReps: this.exerciseForm.value.planReps,
-      planWeight: this.exerciseForm.value.planWeight,
-      weekType: this.exerciseForm.value.weekType
+    if(this.userId){
+      const newExercise: Omit<Exercise, "id"> = {
+        uid: this.userId,
+        planSets: this.exerciseForm.value.planSets,
+        description: this.exerciseForm.value.description,
+        title: this.exerciseForm.value.title,
+        planReps: this.exerciseForm.value.planReps,
+        planWeight: this.exerciseForm.value.planWeight,
+        weekType: this.exerciseForm.value.weekType
+      }
+      this.workoutFacade.createExercise(newExercise);
+      this.exerciseForm.patchValue({
+        title: "",
+        description:"",
+        planReps: "",
+        planSets:"",
+        planWeight: "",
+        weekType: "",
+      })
     }
-    this.workoutFacade.createExercise(newExercise);
-    this.exerciseForm.patchValue({
-      title: "",
-      description:"",
-      planReps: "",
-      planSets:"",
-      planWeight: "",
-      weekType: "",
-    })
   }
 
  ngOnInit():void{
-
+    this.authFacade.user$.subscribe((data) => {
+      if(data){
+        this.userId = data.uid
+      }
+    })
   }
-
 }
