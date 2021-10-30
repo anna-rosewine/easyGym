@@ -36,6 +36,9 @@ export class WorkoutStateFacade {
   executedWorkoutKey$ = this.store.pipe(
     select(WorkoutStateSelectors.executedWorkoutKey)
   );
+  executedWorkoutList$ = this.store.pipe(
+    select(WorkoutStateSelectors.executedWorkoutList)
+  );
   chosenExercise$ = this.store.pipe(
     select(WorkoutStateSelectors.chosenExercise)
   );
@@ -44,6 +47,15 @@ export class WorkoutStateFacade {
 
   selectWorkout$ = (id: string) =>
     this.store.pipe(select(WorkoutStateSelectors.selectWorkout(id)));
+
+  getPersonalizedWorkouts$ = (id: string) =>
+    this.store.pipe(select(WorkoutStateSelectors.personalizedWorkoutList(id)));
+
+  getPersonalizedExecutedWorkouts$ = (id: string) =>
+    this.store.pipe(select(WorkoutStateSelectors.personalizedExecutedWorkoutList(id)));
+
+  getPersonalizedExercises$ = (id: string) =>
+    this.store.pipe(select(WorkoutStateSelectors.personalizedExerciseList(id)));
   // workoutList$ = this.store.pipe(
   //   select(WorkoutStateSelectors.workoutList)
   // );
@@ -67,9 +79,12 @@ export class WorkoutStateFacade {
     this.store.dispatch(WorkoutStateActions.getListOfWorkouts())
   }
 
+  getExecutedWorkoutList(){
+    this.store.dispatch(WorkoutStateActions.getListOfExecutedWorkout())
+  }
+
   createExercise(exercise: Omit<Exercise, "id">){
     this.store.dispatch(WorkoutStateActions.createExercise({exercise: exercise}))
-
   }
 
   createWorkout(workout: Omit<Workout, "id">){
@@ -84,19 +99,12 @@ export class WorkoutStateFacade {
   getExecutedWorkout(key:string){
     this.store.dispatch(WorkoutStateActions.getExecutedWorkout({key: key}))
   }
-  //
-  // updateExecutedWorkout(workout: Omit<ExecutedWorkout, "id">){
-  //   this.store.dispatch(WorkoutStateActions.createExecutedWorkout({workout: workout}))
-  // }
 
   updateExecutedWorkout(key:string, workout: ExecutedWorkout){
     this.store.dispatch(WorkoutStateActions.updateExecutedWorkout({key: key, executedWorkout: workout}))
   }
 
-
   setChosenWorkout(workout: Workout){
     this.store.dispatch(WorkoutStateActions.setChosenWorkout({workout: workout}))
   }
-
-
 }

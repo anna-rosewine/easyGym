@@ -11,9 +11,15 @@ import { Workout } from '@pet/shared/functions';
 export class ChooseWorkoutComponent implements OnInit {
   workoutList: Workout[] | undefined;
   chosenWorkoutId: string | undefined;
+  message: string | undefined;
   constructor(private router: Router, private workoutFacade: WorkoutStateFacade) { }
   chooseWorkout(){
-    this.router.navigate([`/process/preWorkout/${this.chosenWorkoutId}`])
+    if(this.chosenWorkoutId){
+      this.message = undefined
+      this.router.navigate([`/process/preWorkout/${this.chosenWorkoutId}`])
+    } else {
+      this.message = 'Без выбранной тренировки ты не сможешь продолжить'
+    }
   }
 
   choose(workout: Workout){

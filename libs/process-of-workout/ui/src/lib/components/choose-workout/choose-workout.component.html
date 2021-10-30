@@ -4,6 +4,7 @@
       <path d="M8.53499 0.514999L0.0499878 9L8.53499 17.485L9.94999 16.071L2.87799 9L9.94999 1.929L8.53499 0.514999Z" fill="#181818"/>
     </svg>
     <p (click)='back()'>Назад</p>
+    <p></p>
   </div>
   <div>
     <div   (click)='choose(workout)' *ngFor='let workout of workoutList'>
@@ -13,5 +14,5 @@
     </div>
   </div>
   <button (click)='chooseWorkout()' class='btn100'>Выбрать тренировку</button>
-
+  <p *ngIf='message' style='font-size: 12px; text-align: center'>{{message}}</p>
 </div>

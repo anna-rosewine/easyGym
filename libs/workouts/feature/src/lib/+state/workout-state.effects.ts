@@ -85,7 +85,6 @@ export class WorkoutStateEffects {
                 find = true
                 neededW = w
               }
-
               list.push(<ExecutedWorkout>e.payload.doc.data())
             })
             if(!neededW){
@@ -137,6 +136,7 @@ export class WorkoutStateEffects {
       )
     );
   });
+
   getWorkoutList$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(WorkoutStateActions.getListOfWorkouts),
@@ -145,7 +145,7 @@ export class WorkoutStateEffects {
           map((workoutList) => {
             const list: Workout[] = [];
             workoutList.forEach((a) => {
-              list.push( <Workout>a.payload.doc.data())
+              list.push(<Workout>a.payload.doc.data())
             })
             return WorkoutStateActions.workoutListSuccessfullyLoaded({workoutList: list});
           }),
@@ -154,6 +154,25 @@ export class WorkoutStateEffects {
       )
     );
   });
+
+  getExecutedWorkoutList$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(WorkoutStateActions.getListOfExecutedWorkout),
+      mergeMap((action) =>
+        this.workoutService.getListOfExecutedWorkout().pipe(
+          map((workoutList) => {
+            const list: ExecutedWorkout[] = [];
+            workoutList.forEach((a) => {
+              list.push(<ExecutedWorkout>a.payload.doc.data())
+            })
+            return WorkoutStateActions.listOfExecutedWorkoutSuccessfullyLoaded({executedWorkout: list});
+          }),
+          catchError(async (err) => WorkoutStateActions.listOfExecutedWorkoutLoadingFailed({ error: err }))
+        )
+      )
+    );
+  });
+
 
 
   constructor(private readonly actions$: Actions,

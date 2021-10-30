@@ -18,7 +18,10 @@ export interface State extends EntityState<WorkoutStateEntity> {
   chosenExercise?: Exercise
   currentExecutedWorkout?: ExecutedWorkout
   executedWorkoutKey?: string | undefined
-
+  executedWorkoutList?: ExecutedWorkout[]
+  personalizedExercises?: Exercise[]
+  personalizedWorkouts?: Workout[]
+  personalizedExecutedWorkouts?: ExecutedWorkout[]
 }
 
 export interface WorkoutStatePartialState {
@@ -55,6 +58,10 @@ const workoutStateReducer = createReducer(
     ...state,
     executedWorkoutKey: executedWorkoutKey
   })),
+  on(WorkoutStateActions.listOfExecutedWorkoutSuccessfullyLoaded, (state, {executedWorkout }) => ({
+    ...state,
+    executedWorkoutList: executedWorkout
+  })),
   on(WorkoutStateActions.executedWorkoutSuccessfullyLoaded, (state, { executedWorkout }) => ({
     ...state,
     currentExecutedWorkout: executedWorkout
@@ -66,6 +73,18 @@ const workoutStateReducer = createReducer(
   on(WorkoutStateActions.workoutListSuccessfullyLoaded, (state, { workoutList }) => ({
     ...state,
     workoutList: workoutList
+  })),
+  on(WorkoutStateActions.setPersonalizedWorkouts, (state, { workoutList }) => ({
+    ...state,
+    personalizedWorkouts: workoutList
+  })),
+  on(WorkoutStateActions.setPersonalizedExercises, (state, { exerciseList }) => ({
+    ...state,
+    personalizedExercises: exerciseList
+  })),
+  on(WorkoutStateActions.setPersonalizedExecutedWorkouts, (state, { executedWorkoutList}) => ({
+    ...state,
+    personalizedExecutedWorkouts: executedWorkoutList
   })),
   on(WorkoutStateActions.setChosenWorkout, (state, { workout }) => ({
     ...state,

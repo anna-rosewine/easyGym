@@ -81,7 +81,6 @@ export class WorkoutService {
   }
 
   createExecutedExercise(executedExercise: ExecutedExercise):Observable<ObservedValueOf<Promise<DocumentReference<unknown>>>>{
-
     return  from(this.afs
       .collection("executedExercise")
       .add(executedExercise))
@@ -109,8 +108,8 @@ export class WorkoutService {
   //   return  fromPromise(this.db.list(`workout`).push(newWorkout).get().then())
   // }
 
-  getListOfExecutedWorkout( ):Observable<{type: string, key: string} | ExecutedWorkout[] | any[]>{
-    return this.realTimeDbExecutedWorkouts.snapshotChanges()
+  getListOfExecutedWorkout( ){
+    return from(this.afs.collection('executedWorkout').snapshotChanges())
   }
 
   updateExecutedWorkout(key:string, workout: ExecutedWorkout): Observable<ExecutedWorkout | unknown>{

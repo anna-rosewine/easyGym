@@ -54,6 +54,61 @@
   background-color: #ffffff;
   position: relative;
   .statistic {
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 10px;
+      justify-content: space-between;
+      .executedWorkout{
+        height: 165px;
+        position: relative;
+        border-radius: 12px;
+        background-color: #FBFFCF;
+        width: 145px;
+        padding: 10px;
+        .title{
+          font-size: 16px;
+          margin: 12px 0;
+        }
+        .date{
+          font-size: 12px;
+        }
+        .done {
+          position:absolute;
+          bottom: -10px;
+          right: -10px;
+          background-color: #ffffff;
+          height: 80px;
+          width: 80px;
+          border-radius: 100%;
+        }
+        .done::before{
+          content: '';
+          display: block;
+          height: 50px;
+          position: absolute;
+          width: 50px;
+          left: 50%;
+          top: 50%;
+          border-radius: 100%;
+          background-color: #ECFF0D;
+          transform: translate((-50%), -50%);
+        }
+        .done::after{
+          content: '✔';
+          display: block;
+          font-size: 20px;
+          height: 2px;
+          position: absolute;
+          width: 2px;
+          left: 38%;
+          top: 38%;
+          //transform: translate(-50%, -50%);
+        }
+      }
+    }
+
     .tip {
       margin: 10px 0;
     }

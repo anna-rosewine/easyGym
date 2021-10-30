@@ -25,6 +25,20 @@ export const exerciseListSuccessfullyLoaded = createAction(
   props<{ exerciseList: Exercise[] }>()
 );
 
+export const setPersonalizedExercises  = createAction(
+  '[WorkoutState/API] Set Personalized Exercises',
+  props<{ exerciseList: Exercise[] }>()
+);
+
+export const setPersonalizedWorkouts  = createAction(
+  '[WorkoutState/API] Set Personalized Workouts',
+  props<{ workoutList: Workout[] }>()
+);
+
+export const setPersonalizedExecutedWorkouts  = createAction(
+  '[WorkoutState/API] Set Personalized Executed Workouts',
+  props<{ executedWorkoutList: ExecutedWorkout[] }>()
+);
 
 export const loadingExerciseListFailed= createAction(
   '[WorkoutState/API] Loading Exercise List Failed',
@@ -114,6 +128,20 @@ export const executedWorkoutCreatingFailed = createAction(
 export const getExecutedWorkout = createAction(
   '[WorkoutState/API] Get Executed Workout',
   props<{ key:string }>()
+);
+
+export const getListOfExecutedWorkout = createAction(
+  '[WorkoutState/API] Get List Of Executed Workout',
+);
+
+export const listOfExecutedWorkoutSuccessfullyLoaded = createAction(
+  '[WorkoutState/API] List Of Executed Workout  Successfully Loaded',
+  props<{ executedWorkout: ExecutedWorkout[]  }>()
+);
+
+export const listOfExecutedWorkoutLoadingFailed = createAction(
+  '[WorkoutState/API] List Of Executed Workout Loading Failed',
+  props<{error: Error }>()
 );
 
 export const emptyAction =  createAction(

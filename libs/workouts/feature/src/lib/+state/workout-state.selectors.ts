@@ -47,6 +47,21 @@ export const selectWorkout = (id: string) =>
     workouts ? workouts.filter((w) => w.id === id)[0] : undefined
   );
 
+export const personalizedWorkoutList = (uid: string) =>
+  createSelector(workoutList, (workouts) =>
+    workouts ? workouts.filter((w) => w.uid === uid) : undefined
+  );
+
+export const personalizedExerciseList = (uid: string) =>
+  createSelector(exerciseList, (exercises) =>
+    exercises ? exercises.filter((e) => e.uid === uid) : undefined
+  );
+
+export const personalizedExecutedWorkoutList = (uid: string) =>
+  createSelector(executedWorkoutList, (workouts) =>
+    workouts ? workouts.filter((w) => w.uid == uid) : undefined
+  );
+
 export const exerciseList = createSelector(
   getWorkoutStateState,
   (state: State) => state.exerciseList
@@ -75,6 +90,11 @@ export const currentExecutedWorkout = createSelector(
 export const executedWorkoutKey = createSelector(
   getWorkoutStateState,
   (state: State) => state.executedWorkoutKey
+);
+
+export const executedWorkoutList = createSelector(
+  getWorkoutStateState,
+  (state: State) => state.executedWorkoutList
 );
 
 export const getSelected = createSelector(
